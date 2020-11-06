@@ -1,5 +1,5 @@
 {
-  "name": "sudoku-generator",
+  "name": "sudoku-server",
   "version": "1.0.0",
   "description": "Generate sudoku boards",
   "main": "dist/app.js",
