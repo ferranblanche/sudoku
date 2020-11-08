@@ -15,7 +15,7 @@ let template = [
     [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ]
 
-const sudoku = new SudokuModel("easy", template)
+const sudoku = new SudokuModel(template)
 
 // tslint:disable-next-line:no-console
 console.log(sudoku.toString())

@@ -10,10 +10,11 @@ export interface SudokuInterface {
     // MARKS
     writeMark(row: number, col: number, num: number): void
     readMarks(): MarkInterface[]
-    ereaseMark(row: number, col: number, num: number): void
+    eraseMark(row: number, col: number, num: number): void
     // NUMBERS
     validateNumber(row: number, col: number, num: number): boolean
     writeNumber(row: number, col: number, num: number): void
+    eraseNumber(row: number, col: number): void
     // HINTS
     readHint(): HintInterface
     // SOLVE

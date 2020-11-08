@@ -3,13 +3,14 @@ import { SudokuInterface, BlankInterface, MarkInterface, HintInterface } from '.
 
 export class SudokuModel implements SudokuInterface {
     // PROPERTIES
+    private template: BoardType
     private board: BoardType
     private blanks: BlankInterface[]
     private marks: MarkInterface[]
     // CONSTRUCTOR
-    constructor(difficulty: "easy" | "medium" | "hard", template?: BoardType) {
+    constructor(template?: BoardType) {
         if(!template || !this.validateTemplate(template)) {
-            this.board = [
+            this.template = [
                 [5, 3, 0, 0, 7, 0, 0, 0, 0],
                 [6, 0, 0, 1, 9, 5, 0, 0, 0],
                 [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -20,8 +21,10 @@ export class SudokuModel implements SudokuInterface {
                 [0, 0, 0, 4, 1, 9, 0, 0, 5],
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ]
+        } else {
+            this.template = template
         }
-        this.board = template
+        this.board = this.template
         this.blanks = this.calculateBlanks()
         this.marks = []
     }
@@ -55,14 +58,14 @@ export class SudokuModel implements SudokuInterface {
     // MARKS
     writeMark(row: number, col: number, num: number): void {
         if (this.getCell(row, col) && this.validateNumberInput(num)) {
-            this.ereaseMark(row, col, num)
+            this.eraseMark(row, col, num)
             this.marks.push({ row, col, num })
         }
     }
     readMarks(): MarkInterface[] {
         return this.marks
     }
-    ereaseMark(row: number, col: number, num: number): void {
+    eraseMark(row: number, col: number, num: number): void {
         this.marks.filter(mark => mark !== { row, col, num })
     }
     // NUMBERS
@@ -70,11 +73,14 @@ export class SudokuModel implements SudokuInterface {
         return this.validateArray(this.getRow(rowIndex), num) && this.validateArray(this.getColumn(colIndex), num) && this.validateArray(this.getBlock(rowIndex, colIndex), num)
     }
     public writeNumber(rowIndex: number, colIndex: number, num: number): BoardType {
-        if (!this.getCell(rowIndex, colIndex) && this.validateNumber(rowIndex, colIndex, num)) {
+        if (!this.getCell(rowIndex, colIndex) && this.validateNumberInput(num)) {
             this.board[rowIndex][colIndex] = num
             this.removeBlank(rowIndex, colIndex)
         }
         return this.board
+    }
+    public eraseNumber(row: number, col: number): void {
+        this.board[row][col] = 0
     }
     // HINTS
     public readHint(): HintInterface {
