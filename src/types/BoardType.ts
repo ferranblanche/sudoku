@@ -1,0 +1,1 @@
+export type BoardType = Array<Array<number>>
