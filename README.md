@@ -7,7 +7,7 @@ Generate and solve Sudokus
 Install the NPM package
 
 ```bash
-npm install @ferranbx/sudoku
+npm install @ferranblanche/sudoku
 ```
 
 Import Sudoku to your project and create a new Game (ES6 module syntax):
