@@ -13,21 +13,21 @@ npm i game-sudoku
 Import Sudoku to your project and create a new Game (ES6 module syntax):
 
 ```typescript
-import { Sudoku } from "@ferranbx/sudoku";
+import { Sudoku } from 'game-sudoku';
 const sudoku = new Sudoku();
 ```
 
 ... or using CommonJS syntax:
 
 ```
-const { Sudoku } = require('@ferranbx/sudoku')
+const { Sudoku } = require('game-sudoku')
 const sudoku = new Sudoku()
 ```
 
 Use your own template:
 
 ```typescript
-import { Sudoku } from "@ferranbx/sudoku";
+import { Sudoku } from 'game-sudoku';
 
 let template = [
   [5, 3, 0, 0, 7, 0, 0, 0, 0],
