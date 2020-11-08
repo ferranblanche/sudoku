@@ -1,6 +1,6 @@
 {
-  "name": "sudoku",
-  "version": "1.0.0",
+  "name": "game-sudoku",
+  "version": "0.1.0",
   "description": "Generate sudoku",
   "main": "dist/index.js",
   "dependencies": {},
@@ -30,5 +30,6 @@
     "Generator"
   ],
   "author": "ferranblanche",
-  "license": "MIT"
+  "license": "MIT",
+  "homepage": "https://github.com/ferranblanche/sudoku"
 }
