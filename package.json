@@ -1,8 +1,8 @@
 {
-  "name": "sudoku-server",
+  "name": "sudoku",
   "version": "1.0.0",
-  "description": "Generate sudoku boards",
-  "main": "dist/app.js",
+  "description": "Generate sudoku",
+  "main": "dist/index.js",
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.15",
