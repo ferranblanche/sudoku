@@ -3,7 +3,7 @@ export function isIntegerBetween(num: number, min: number, max: number): boolean
     return Number.isInteger(num) && num >= min && num <= max
 }
 
-// Array utilities
+// Row/Column utilities
 export function isArrayLength(array: number[], length: number): boolean {
     return array.length === length
 }
