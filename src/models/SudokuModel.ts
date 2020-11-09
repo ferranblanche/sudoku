@@ -1,5 +1,6 @@
 import { BoardType } from '../types/BoardType'
 import { SudokuInterface, BlankInterface, MarkInterface, HintInterface } from '../interfaces'
+import { isMatrixSize, isMatrixOfIntegersBetween } from '../utilities'
 
 export class SudokuModel implements SudokuInterface {
     // PROPERTIES
@@ -111,7 +112,8 @@ export class SudokuModel implements SudokuInterface {
     }
     // PREPARE TO PRINT
     public toString(): string {
-        return '-----------------\n' + this.board.map(row => { return row.join().replace(/(,|0)/gi, ' ') + '\n' }).join().replace(/,/gi, '')
+        const divider = '\n- - - - - - - - - - - - - - - - - -\n '
+        return 'Sudoku:' + divider + this.board.map(row => { return row.join().replace(/(0)/gi, ' ').replace(/(,)/gi, ' | ') + divider }).join().replace(/,/gi, '')
     }
     // UTILS
     private getCell(row: number, col: number): number {
@@ -138,11 +140,6 @@ export class SudokuModel implements SudokuInterface {
         return this.validateNumberInput(num) && !array.includes(num) && array.length === 9
     }
     private validateTemplate(template: BoardType): boolean {
-        for(let row of this.board) {
-            if(!this.validateArrayInput(row)) {
-                return false
-            }
-        }
-        return template.length === 9
+        return isMatrixSize(template,9,9) && isMatrixOfIntegersBetween(template,0,9)
     }
 }
