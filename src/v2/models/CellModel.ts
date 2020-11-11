@@ -10,6 +10,9 @@ export class CellModel implements CellInterface {
         if (isArrayOfIntegersBetween1and9(marks)) { this.marks = marks }
     }
 
+    isBlank(): boolean {
+        return !this.number
+    }
     getNumber(): number {
         return this.number
     }
@@ -24,6 +27,9 @@ export class CellModel implements CellInterface {
         let removedNumber = this.number
         this.number = undefined
         return removedNumber
+    }
+    hasMarks(): boolean {
+        return !!this.marks.length
     }
     getMarks(): Array<number> {
         return this.marks

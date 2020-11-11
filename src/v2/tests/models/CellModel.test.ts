@@ -56,3 +56,25 @@ describe("Cell Model – Constructor", () => {
         expect(cell.getMarks()).to.be.empty
     })
 })
+
+describe("Cell Utilities – isBlank", () => {
+    it("detects undefined number as a blank", () => {
+        let number = undefined
+        let cell = new CellModel(number)
+        expect(cell.isBlank()).to.be.true
+    })
+    it("detects an integer", () => {
+        let number = 6
+        let cell = new CellModel(number)
+        expect(cell.isBlank()).to.be.false
+    })
+})
+
+// getNumber
+// setNumber
+// removeNumber
+// hasMarks
+// getMarks
+// setMark
+// removeMark
+// cleanMarks
