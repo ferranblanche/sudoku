@@ -162,7 +162,18 @@ describe("Cell Model – setNumber", () => {
     })
 })
 
-// describe("Cell Model – removeNumber", () => {})
+describe("Cell Model – removeNumber", () => {
+    it("removes and returns the number when it is defined", () => {
+        let number: number = 5
+        let cell: CellModel = new CellModel(number)
+        expect(cell.removeNumber()).to.be.equal(number)
+    })
+    it("returns undefined whrn number was not defined", () => {
+        let cell: CellModel = new CellModel()
+        expect(cell.removeNumber()).to.be.undefined
+    })
+})
+
 // describe("Cell Model – hasMarks", () => {})
 // describe("Cell Model – getMarks", () => {})
 // describe("Cell Model – setMark", () => {})
