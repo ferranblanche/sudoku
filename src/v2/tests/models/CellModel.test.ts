@@ -57,7 +57,7 @@ describe("Cell Model – Constructor", () => {
     })
 })
 
-describe("Cell Utilities – isBlank", () => {
+describe("Cell Model – isBlank", () => {
     it("detects undefined number as a blank", () => {
         let number = undefined
         let cell = new CellModel(number)
@@ -70,11 +70,32 @@ describe("Cell Utilities – isBlank", () => {
     })
 })
 
-// getNumber
-// setNumber
-// removeNumber
-// hasMarks
-// getMarks
-// setMark
-// removeMark
-// cleanMarks
+describe("Cell Model – getNumber", () => {
+    it("gets the introducided integer", () => {
+        let number = 9
+        let cell = new CellModel(number)
+        expect(cell.getNumber()).to.be.equal(number)
+    })
+    it("gets undefined when number not set", () => {
+        let cell = new CellModel()
+        expect(cell.getNumber()).to.be.undefined
+    })
+    it("gets undefined when number is undefined", () => {
+        let number = undefined
+        let cell = new CellModel(number)
+        expect(cell.getNumber()).to.be.undefined
+    })
+    it("gets undefined when number is NaN", () => {
+        let number = NaN
+        let cell = new CellModel(number)
+        expect(cell.getNumber()).to.be.undefined
+    })
+})
+
+// describe("Cell Model – setNumber", () => {})
+// describe("Cell Model – removeNumber", () => {})
+// describe("Cell Model – hasMarks", () => {})
+// describe("Cell Model – getMarks", () => {})
+// describe("Cell Model – setMark", () => {})
+// describe("Cell Model – removeMark", () => {})
+// describe("Cell Model – cleanMarks", () => {})
