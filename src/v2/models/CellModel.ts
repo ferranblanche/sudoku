@@ -7,7 +7,7 @@ export class CellModel implements CellInterface {
 
     constructor(number: number = undefined, marks: Array<number> = []) {
         if (isIntegerBetween1and9(number)) { this.number = number }
-        if (isArrayOfIntegersBetween1and9(marks)) { this.marks = marks }
+        else if (isArrayOfIntegersBetween1and9(marks)) { this.marks = marks }
     }
 
     isBlank(): boolean {
@@ -19,9 +19,10 @@ export class CellModel implements CellInterface {
     setNumber(number: number): number {
         if (isIntegerBetween1and9(number)) {
             this.number = number
-        }
-        this.cleanMarks()
-        return this.number
+            this.cleanMarks()
+            return this.number
+        }        
+        return undefined
     }
     removeNumber(): number {
         let removedNumber = this.number
