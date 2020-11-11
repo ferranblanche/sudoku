@@ -104,7 +104,18 @@ export class SudokuModel implements SudokuInterface {
         return undefined
     }
     // SOLVE
-    resolve(): void {
+    public isSolvable(): boolean {
+        const sudokuCopy = new SudokuModel(this.board)
+        for (const blank of sudokuCopy.readBlanks()) {
+            const hint = sudokuCopy.readHint()
+            if(hint === undefined) {
+                return false
+            }
+            sudokuCopy.writeNumber(hint.rowIndex, hint.colIndex, hint.num)
+        }
+        return true
+    }
+    public resolve(): void {
         for (const blank of this.blanks) {
             const { rowIndex, colIndex, num } = this.readHint()
             this.writeNumber(rowIndex, colIndex, num)

@@ -1,7 +1,7 @@
 import { expect } from 'chai'
 import 'mocha'
 
-import { isIntegerBetween, isArrayLength, isArrayOfIntegersBetween } from '../utilities'
+import { isIntegerBetween, isArrayLength, isArrayOfIntegersBetween, isMatrixSize } from '../utilities'
 
 describe('Cell Utilities - isIntegerBetween', () => {
     it('Detects undefined', () => {
@@ -63,3 +63,57 @@ describe('Row/Column Utilities – isArrayOfIntegersBetween', () => {
         expect(isArrayOfIntegersBetween(array, 0, 10)).to.be.true
     })
 })
+
+describe('Matrix Utilities – isMatrixSize', () => {
+    it('Detects more rows than expected', () => {
+        let matrix = [
+            [1,2,3],
+            [4,5,6],
+            [7,8,9],
+            [10,11,12]
+        ]
+        expect(isMatrixSize(matrix,3,3)).to.be.false
+    })
+    it('Detects less rows than expected', () => {
+        let matrix = [
+            [1,2,3],
+            [4,5,6]
+        ]
+        expect(isMatrixSize(matrix,3,3)).to.be.false
+    })
+    it('Detects more columns than expected', () => {
+        let matrix = [
+            [1,2,3,4],
+            [5,6,7,8],
+            [9,10,11,12]
+        ]
+        expect(isMatrixSize(matrix,3,3)).to.be.false
+    })
+    it('Detects less columns than expected', () => {
+        let matrix = [
+            [1],
+            [2]
+        ]
+        expect(isMatrixSize(matrix,3,3)).to.be.false
+    })
+    it('Detects more un-even columns than expected', () => {
+        let matrix = [
+            [1,2,3],
+            [4,5,6,7,8],
+            [9,10]
+        ]
+        expect(isMatrixSize(matrix,3,3)).to.be.false
+    })
+    it('Detects matrix with the specified number of rows and columns', () => {
+        let matrix = [
+            [1,2,3],
+            [4,5,6],
+            [7,8,9]
+        ]
+        expect(isMatrixSize(matrix,3,3)).to.be.true
+    })
+})
+
+// describe('Matrix Utilities – isMatrixOfIntegersBetween', () => {
+
+// })
