@@ -174,7 +174,21 @@ describe("Cell Model – removeNumber", () => {
     })
 })
 
-// describe("Cell Model – hasMarks", () => {})
+describe("Cell Model – hasMarks", () => {
+    it("detects when marks were added", () => {
+        let number: number = undefined
+        let marks: Array<number> = [3,6,8]
+        let cell: CellModel = new CellModel(number, marks)
+        expect(cell.hasMarks()).to.be.true
+    })
+    it("detects when marks were left empty", () => {
+        let number: number = undefined
+        let marks: Array<number> = undefined
+        let cell: CellModel = new CellModel(number, marks)
+        expect(cell.hasMarks()).to.be.false
+    })
+})
+
 // describe("Cell Model – getMarks", () => {})
 // describe("Cell Model – setMark", () => {})
 // describe("Cell Model – removeMark", () => {})
