@@ -189,7 +189,29 @@ describe("Cell Model – hasMarks", () => {
     })
 })
 
-// describe("Cell Model – getMarks", () => {})
+describe("Cell Model – getMarks", () => {
+    it("returns marks when they are added", () => {
+        let number: number = undefined
+        let marks: Array<number> = [2,5,6]
+        let cell: CellModel = new CellModel(number, marks)
+        expect(cell.getMarks()).to.be.equal(marks)
+    })
+    it("returns empty when no marks where added", () => {
+        let number: number = undefined
+        let marks: Array<number> = []
+        let cell: CellModel = new CellModel(number, marks)
+        expect(cell.getMarks()).to.be.empty
+    })
+    it("returns empty when a number is added", () => {
+        let number: number = undefined
+        let marks: Array<number> = [2,5,6]
+        let cell: CellModel = new CellModel(number, marks)
+        number = 3
+        cell.setNumber(number)
+        expect(cell.getMarks()).to.be.empty
+    })
+})
+
 // describe("Cell Model – setMark", () => {})
 // describe("Cell Model – removeMark", () => {})
 // describe("Cell Model – cleanMarks", () => {})
