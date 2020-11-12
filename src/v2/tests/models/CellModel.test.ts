@@ -216,14 +216,14 @@ describe("Cell Model – setMark", () => {
     it("sets mark when it is an integer between 1 and 9 and wasn't already written", () => {
         let cell: CellModel = new CellModel()
         let mark: number = 1
-        expect(cell.setMark(mark)).to.be.an('array').that.include(mark)
-        expect(cell.getMarks()).to.be.an('array').that.include(mark)
+        expect(cell.setMark(mark)).to.be.an('array').that.includes(mark)
+        expect(cell.getMarks()).to.be.an('array').that.includes(mark)
     })
     it("rejects when there's duplicate", () => {
         let mark: number = 5
         let cell: CellModel = new CellModel(undefined, [mark])
-        expect(cell.setMark(mark)).to.be.an('array').that.include(mark)
-        expect(cell.getMarks()).to.be.an('array').that.include(mark)
+        expect(cell.setMark(mark)).to.be.an('array').that.includes(mark)
+        expect(cell.getMarks()).to.be.an('array').that.includes(mark)
     })
     it("rejects when there's a decimal number", () => {
         let cell: CellModel = new CellModel()
@@ -257,14 +257,28 @@ describe("Cell Model – setMark", () => {
     })
 })
 
-// describe("Cell Model – removeMark", () => {
-//     it("", () => {})
-//     it("", () => {})
-//     it("", () => {})
-// })
+describe("Cell Model – removeMark", () => {
+    it("removes a mark when it was added", () => {
+        let mark: number = 5
+        let cell: CellModel = new CellModel(undefined, [mark])
+        expect(cell.removeMark(mark)).to.be.an('array').that.does.not.include(mark)
+    })
+    it("does nothing when it was not added", () => {
+        let mark: number = undefined
+        let cell: CellModel = new CellModel(undefined, [mark])
+        expect(cell.removeMark(mark)).to.be.an('array').that.does.not.include(mark)
+    })
+})
 
-// describe("Cell Model – cleanMarks", () => {
-//     it("", () => {})
-//     it("", () => {})
-//     it("", () => {})
-// })
+describe("Cell Model – cleanMarks", () => {
+    it("empties the marks when they were added", () => {
+        let marks: Array<number> = [2,5,9]
+        let cell: CellModel = new CellModel(undefined, marks)
+        expect(cell.cleanMarks()).to.be.an('array').that.is.empty
+    })
+    it("does nothing when marks were not added", () => {
+        let marks: Array<number> = []
+        let cell: CellModel = new CellModel(undefined, marks)
+        expect(cell.cleanMarks()).to.be.an('array').that.is.empty
+    })
+})
