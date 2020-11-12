@@ -212,6 +212,59 @@ describe("Cell Model – getMarks", () => {
     })
 })
 
-// describe("Cell Model – setMark", () => {})
-// describe("Cell Model – removeMark", () => {})
-// describe("Cell Model – cleanMarks", () => {})
+describe("Cell Model – setMark", () => {
+    it("sets mark when it is an integer between 1 and 9 and wasn't already written", () => {
+        let cell: CellModel = new CellModel()
+        let mark: number = 1
+        expect(cell.setMark(mark)).to.be.an('array').that.include(mark)
+        expect(cell.getMarks()).to.be.an('array').that.include(mark)
+    })
+    it("rejects when there's duplicate", () => {
+        let mark: number = 5
+        let cell: CellModel = new CellModel(undefined, [mark])
+        expect(cell.setMark(mark)).to.be.an('array').that.include(mark)
+        expect(cell.getMarks()).to.be.an('array').that.include(mark)
+    })
+    it("rejects when there's a decimal number", () => {
+        let cell: CellModel = new CellModel()
+        let mark: number = 1.87
+        expect(cell.setMark(mark)).to.be.empty
+        expect(cell.getMarks()).to.be.an('array').that.does.not.include(mark)
+    })
+    it("rejects when there's an integer smaller than 1", () => {
+        let cell: CellModel = new CellModel()
+        let mark: number = -28
+        expect(cell.setMark(mark)).to.be.empty
+        expect(cell.getMarks()).to.be.an('array').that.does.not.include(mark)
+    })
+    it("rejects when there's an integer greater than 9", () => {
+        let cell: CellModel = new CellModel()
+        let mark: number = 34
+        expect(cell.setMark(mark)).to.be.empty
+        expect(cell.getMarks()).to.be.an('array').that.does.not.include(mark)
+    })
+    it("rejects when there's an undefined", () => {
+        let cell: CellModel = new CellModel()
+        let mark: number = undefined
+        expect(cell.setMark(mark)).to.be.empty
+        expect(cell.getMarks()).to.be.an('array').that.does.not.include(mark)
+    })
+    it("rejects when there's a NaN", () => {
+        let cell: CellModel = new CellModel()
+        let mark: number = NaN
+        expect(cell.setMark(mark)).to.be.empty
+        expect(cell.getMarks()).to.be.an('array').that.does.not.include(mark)
+    })
+})
+
+// describe("Cell Model – removeMark", () => {
+//     it("", () => {})
+//     it("", () => {})
+//     it("", () => {})
+// })
+
+// describe("Cell Model – cleanMarks", () => {
+//     it("", () => {})
+//     it("", () => {})
+//     it("", () => {})
+// })
