@@ -1,156 +1,96 @@
-import { BoardType } from '../types/BoardType'
-import { SudokuInterface, BlankInterface, MarkInterface, HintInterface } from '../interfaces'
-import { isMatrixSize, isMatrixOfIntegersBetween } from '../utilities'
+import { SudokuInterface } from "../interfaces";
+import { Gridtype, MatrixType } from "../types";
+import { GridModel } from "./";
+import { GroupModel } from "./GroupModel";
 
 export class SudokuModel implements SudokuInterface {
-    // PROPERTIES
-    private template: BoardType
-    private board: BoardType
-    private blanks: BlankInterface[]
-    private marks: MarkInterface[]
-    // CONSTRUCTOR
-    constructor(template?: BoardType) {
-        if(!template || !this.validateTemplate(template)) {
-            this.template = [
-                [5, 3, 0, 0, 7, 0, 0, 0, 0],
-                [6, 0, 0, 1, 9, 5, 0, 0, 0],
-                [0, 9, 8, 0, 0, 0, 0, 6, 0],
-                [8, 0, 0, 0, 6, 0, 0, 0, 3],
-                [4, 0, 0, 8, 0, 3, 0, 0, 1],
-                [7, 0, 0, 0, 2, 0, 0, 0, 6],
-                [0, 6, 0, 0, 0, 0, 2, 8, 0],
-                [0, 0, 0, 4, 1, 9, 0, 0, 5],
-                [0, 0, 0, 0, 8, 0, 0, 7, 9]
+    private _layout: GridModel
+    private _grid: GridModel
+    private _solution: GridModel = undefined
+
+    constructor() {
+        this.generate()
+    }
+
+    public generate(layout?: MatrixType): SudokuModel {
+        if (!layout) {
+            layout = [
+                [0, 0, 0, 8, 0, 0, 0, 7, 0],
+                [0, 4, 2, 0, 0, 0, 6, 5, 0],
+                [9, 6, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 9, 0, 0, 6, 0, 2, 0],
+                [8, 2, 0, 0, 1, 0, 0, 3, 6],
+                [0, 3, 0, 2, 0, 0, 9, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 9, 5],
+                [0, 9, 5, 0, 0, 0, 4, 1, 0],
+                [0, 8, 0, 0, 0, 3, 0, 0, 0]
             ]
-        } else {
-            this.template = template
         }
-        this.board = this.template
-        this.blanks = this.calculateBlanks()
-        this.marks = []
+        this._layout = new GridModel(layout)
+        this._grid = new GridModel(layout)
+        return this
     }
-    // BOARD
-    public readBoard(): BoardType {
-        return this.board
+
+    public get layout(): GridModel {
+        return this._layout
     }
-    // BLANK CELLS
-    public readBlanks(): BlankInterface[] {
-        return this.blanks
+    public get grid(): GridModel {
+        return this._grid
     }
-    private calculateBlanks(): BlankInterface[] {
-        const blanks = []
-        for (let rowIndex = 0; rowIndex < this.board.length; rowIndex++) {
-            const row = this.board[rowIndex];
-            for (let colIndex = 0; colIndex < row.length; colIndex++) {
-                const cell = row[colIndex];
-                if (!this.validateNumberInput(cell)) {
-                    blanks.push({
-                        row: rowIndex,
-                        col: colIndex
-                    })
-                }
+    public get solution(): GridModel {
+        return this._solution
+    }
+
+    public writeCell(row: number, column: number, digit: number): SudokuModel {
+        this._grid.writeCell(row, column, digit)
+        return this
+    }
+
+    public eraseCell(row: number, column: number): SudokuModel {
+        this._grid.eraseCell(row, column)
+        return this
+    }
+
+    public solve(quantity: 'one' | 'all' = 'one'): SudokuModel {
+        const cells2solve: number = quantity === 'one' ? 1 : this._grid.getBlanks().length
+        for (let index = 0; index < cells2solve; index++) {
+            if (!this.solveOne()) {
+                return this
             }
         }
-        return blanks
+        this._solution = quantity === 'all' ? this._grid : undefined
+        return this
     }
-    private removeBlank(rowIndex: number, colIndex: number): void {
-        this.blanks.filter(blank => blank.row !== rowIndex && blank.col !== colIndex)
+
+    public reset(): SudokuModel {
+        this._grid = this._layout
+        return this
     }
-    // MARKS
-    writeMark(row: number, col: number, num: number): void {
-        if (this.getCell(row, col) && this.validateNumberInput(num)) {
-            this.eraseMark(row, col, num)
-            this.marks.push({ row, col, num })
-        }
-    }
-    readMarks(): MarkInterface[] {
-        return this.marks
-    }
-    eraseMark(row: number, col: number, num: number): void {
-        this.marks.filter(mark => mark !== { row, col, num })
-    }
-    // NUMBERS
-    public validateNumber(rowIndex: number, colIndex: number, num: number): boolean {
-        return this.validateArray(this.getRow(rowIndex), num) && this.validateArray(this.getColumn(colIndex), num) && this.validateArray(this.getBlock(rowIndex, colIndex), num)
-    }
-    public writeNumber(rowIndex: number, colIndex: number, num: number): BoardType {
-        if (!this.getCell(rowIndex, colIndex) && this.validateNumberInput(num)) {
-            this.board[rowIndex][colIndex] = num
-            this.removeBlank(rowIndex, colIndex)
-        }
-        return this.board
-    }
-    public eraseNumber(row: number, col: number): void {
-        this.board[row][col] = 0
-    }
-    // HINTS
-    public readHint(): HintInterface {
-        const blanks: BlankInterface[] = this.readBlanks()
+
+    private solveOne(): boolean {
+        // Strategy 1: Find blanks with just one candidate
+        const blanks: Gridtype = this._grid.calculateCandidates().getBlanks()
         for (const blank of blanks) {
-            const options = []
-            for (let num = 1; num <= 9; num++) {
-                if (this.validateNumber(blank.row, blank.col, num)) {
-                    options.push(num)
+            if (blank.candidates.length === 1) {
+                this._grid.writeCell(blank.row, blank.column, blank.candidates[0])
+                return true
+            }
+        }
+        // Strategy 2: Find blanks with just one candidate
+        const rows: GroupModel[] = this._grid.getRows()
+        const columns: GroupModel[] = this._grid.getColumns()
+        const blocks: GroupModel[] = this._grid.getBlocks()
+        const groups: GroupModel[] = rows.concat(columns).concat(blocks)
+        for (const group of groups) {
+            for (let candidate = 1; candidate <= 9; candidate++) {
+                const blanksWithCandidate = group.filterByCandidate(candidate)
+                if (blanksWithCandidate.length === 1) {
+                    this._grid.writeCell(blanksWithCandidate[0].row, blanksWithCandidate[0].column, candidate)
+                    return true
                 }
             }
-            if (options.length === 1) {
-                return {
-                    rowIndex: blank.row,
-                    colIndex: blank.col,
-                    num: options[0]
-                }
-            }
         }
-        return undefined
-    }
-    // SOLVE
-    public isSolvable(): boolean {
-        const sudokuCopy = new SudokuModel(this.board)
-        for (const blank of sudokuCopy.readBlanks()) {
-            const hint = sudokuCopy.readHint()
-            if(hint === undefined) {
-                return false
-            }
-            sudokuCopy.writeNumber(hint.rowIndex, hint.colIndex, hint.num)
-        }
-        return true
-    }
-    public resolve(): void {
-        for (const blank of this.blanks) {
-            const { rowIndex, colIndex, num } = this.readHint()
-            this.writeNumber(rowIndex, colIndex, num)
-        }
-    }
-    // PREPARE TO PRINT
-    public toString(): string {
-        const divider = '\n- - - - - - - - - - - - - - - - - -\n '
-        return 'Sudoku:' + divider + this.board.map(row => { return row.join().replace(/(0)/gi, ' ').replace(/(,)/gi, ' | ') + divider }).join().replace(/,/gi, '')
-    }
-    // UTILS
-    private getCell(row: number, col: number): number {
-        return this.board[row][col]
-    }
-    private getRow(rowIndex: number): number[] {
-        return this.board[rowIndex]
-    }
-    private getColumn(colIndex: number): number[] {
-        return this.board.map(row => row[colIndex])
-    }
-    private getBlock(rowIndex: number, colIndex: number): number[] {
-        const initialRow = Math.floor(rowIndex / 3) * 3
-        const initialCol = Math.floor(colIndex / 3) * 3
-        return this.board.slice(initialRow, initialRow + 3).map(row => row.slice(initialCol, initialCol + 3)).join().split(',').map(num => parseInt(num, 10))
-    }
-    private validateNumberInput(num: number): boolean {
-        return num && num >= 1 && num <= 9
-    }
-    private validateArrayInput(array: number[]): boolean {
-        return (new Set(array.filter(num => num >= 0 && num <= 9))).size !== array.length && array.length === 9
-    }
-    private validateArray(array: number[], num: number): boolean {
-        return this.validateNumberInput(num) && !array.includes(num) && array.length === 9
-    }
-    private validateTemplate(template: BoardType): boolean {
-        return isMatrixSize(template,9,9) && isMatrixOfIntegersBetween(template,0,9)
+        // Unable to solve
+        return false
     }
 }

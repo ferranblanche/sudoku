@@ -1,4 +1,4 @@
-export * from './BlankInterface'
-export * from './HintInterface'
-export * from './MarkInterface'
+export * from './CellInterface'
+export * from './GridInterface'
+export * from './GroupInterface'
 export * from './SudokuInterface'
