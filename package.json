@@ -1,7 +1,7 @@
 {
   "name": "game-sudoku",
   "version": "0.2.0",
-  "description": "Generate sudoku",
+  "description": "Solve easy and medium sudokus",
   "main": "dist/index.js",
   "dependencies": {},
   "devDependencies": {
@@ -21,7 +21,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "lint": "tslint -c tslint.json -p tsconfig.json --fix",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'src/v2/tests/**/*.test.ts'",
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'src/tests/**/*.test.ts'",
     "tsc": "tsc",
     "build": "npm-run-all clean lint test tsc",
     "dev:start": "npm-run-all build start",
