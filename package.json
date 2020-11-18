@@ -1,6 +1,6 @@
 {
   "name": "game-sudoku",
-  "version": "0.2.1",
+  "version": "0.2.0",
   "description": "Solve easy and medium sudokus",
   "main": "dist/index.js",
   "dependencies": {},
