@@ -2,18 +2,22 @@
 
 Generate and solve Sudokus
 
-# Create your Sudoku Game
+# Getting Started
+
+Quick guide on how to use the package
+
+## Create your Sudoku Game
 
 Install the NPM package
 
 ```bash
-npm i game-sudoku
+npm install game-sudoku
 ```
 
 Import Sudoku to your project and create a new Game (ES6 module syntax):
 
 ```typescript
-import { Sudoku } from 'game-sudoku';
+import { Sudoku } from "game-sudoku";
 const sudoku = new Sudoku();
 ```
 
@@ -24,12 +28,22 @@ const { Sudoku } = require('game-sudoku')
 const sudoku = new Sudoku()
 ```
 
-Use your own template:
+Use your own template (see examples below):
 
 ```typescript
-import { Sudoku } from 'game-sudoku';
+const easyLayout: number[][] = [
+  [0, 0, 0, 2, 6, 0, 7, 0, 1],
+  [6, 8, 0, 0, 7, 0, 0, 9, 0],
+  [1, 9, 0, 0, 0, 4, 5, 0, 0],
+  [8, 2, 0, 1, 0, 0, 0, 4, 0],
+  [0, 0, 4, 6, 0, 2, 9, 0, 0],
+  [0, 5, 0, 0, 0, 3, 0, 2, 8],
+  [0, 0, 9, 3, 0, 0, 0, 7, 4],
+  [0, 4, 0, 0, 5, 0, 0, 3, 6],
+  [7, 0, 3, 0, 1, 8, 0, 0, 0]
+];
 
-let template = [
+let mediumLayout: number[][] = [
   [5, 3, 0, 0, 7, 0, 0, 0, 0],
   [6, 0, 0, 1, 9, 5, 0, 0, 0],
   [0, 9, 8, 0, 0, 0, 0, 6, 0],
@@ -41,139 +55,138 @@ let template = [
   [0, 0, 0, 0, 8, 0, 0, 7, 9]
 ];
 
-const sudoku = new Sudoku(template);
+const hardLayout: number[][] = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 3, 0, 8, 5],
+  [0, 0, 1, 0, 2, 0, 0, 0, 0],
+  [0, 0, 0, 5, 0, 7, 0, 0, 0],
+  [0, 0, 4, 0, 0, 0, 1, 0, 0],
+  [0, 9, 0, 0, 0, 0, 0, 0, 0],
+  [5, 0, 0, 0, 0, 0, 0, 7, 3],
+  [0, 0, 2, 0, 1, 0, 0, 0, 0],
+  [0, 0, 0, 0, 4, 0, 0, 0, 9]
+];
+
+sudoku.generate(hardLayout);
 ```
 
-# Play your Sudoku
+## Play your Sudoku
 
 Get the Board:
 
 ```typescript
-let board = sudoku.readBoard();
-// Board: [
-//    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-//    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-//    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-//    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-//    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-//    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-//    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-//    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-//    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-// ]
+var grid = sudoku.grid;
 ```
 
-... or get it ready to print on the command line:
+... or print it on the command line:
 
 ```typescript
-console.log(sudoku.toString());
-// -----------------
-// 5 3     7
-// 6     1 9 5
-//   9 8         6
-// 8       6       3
-// 4     8   3     1
-// 7       2       6
-//   6         2 8
-//       4 1 9     5
-//         8     7 9
+sudoku.grid.print();
+// · · · · · · · · ·
+// · · · · · 3 · 8 5
+// · · 1 · 2 · · · ·
+// · · · 5 · 7 · · ·
+// · · 4 · · · 1 · ·
+// · 9 · · · · · · ·
+// 5 · · · · · · 7 3
+// · · 2 · 1 · · · ·
+// · · · · 4 · · · 9
 ```
 
-Get all blank cells:
+Write it down digits:
 
 ```typescript
-let blanks = sudoku.getBlanks();
-// Blanks: [
-//    {row: 0, col: 2},
-//    {row: 0, col: 3},
-//    {row: 0, col: 5},
-//    {row: 0, col: 6},
-//    {row: 0, col: 7},
-//    {row: 0, col: 8},
-//    ...
-// ]
+let row: number = 2;
+let column: number = 4;
+let digit: number = 1;
+
+sudoku.writeCell(row, column, digit);
+
+sudoku.grid.print();
+// · · · · · · · · ·
+// · · · 1 · 3 · 8 5
+// · · 1 · 2 · · · ·
+// · · · 5 · 7 · · ·
+// · · 4 · · · 1 · ·
+// · 9 · · · · · · ·
+// 5 · · · · · · 7 3
+// · · 2 · 1 · · · ·
+// · · · · 4 · · · 9
 ```
 
-Test a number:
+... or erase them:
 
 ```typescript
-let idea = { row: 1, col: 2, num: 5 };
-let isGoodIdea = sudoku.validateNumber(idea);
-// isGoodIdea: false
+let row: number = 2;
+let column: number = 4;
+
+sudoku.eraseCell(row, column);
+
+sudoku.grid.print();
+// · · · · · · · · ·
+// · · · · · 3 · 8 5
+// · · 1 · 2 · · · ·
+// · · · 5 · 7 · · ·
+// · · 4 · · · 1 · ·
+// · 9 · · · · · · ·
+// 5 · · · · · · 7 3
+// · · 2 · 1 · · · ·
+// · · · · 4 · · · 9
 ```
 
-... and write it down:
-
-```typescript
-sudoku.writeNumber({ row: 1, col: 2, num: 2 });
-let board = sudoku.readBoard();
-// Board: [
-//    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-//    [6, 0, 2, 1, 9, 5, 0, 0, 0],
-//    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-//    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-//    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-//    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-//    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-//    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-//    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-// ]
-```
-
-... or erase it:
-
-```typescript
-sudoku.eraseNumber({ row: 1, col: 2 });
-let board = sudoku.readBoard();
-// Board: [
-//    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-//    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-//    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-//    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-//    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-//    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-//    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-//    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-//    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-// ]
-```
-
-Add marks to game:
-
-```typescript
-let mark = { row: 0, col: 2, num: 2 };
-sudoku.writeMark(mark);
-```
-
-Get all your marks:
-
-```typescript
-let marks = sudoku.readMarks();
-// Marks: [
-//    {row: 0, col: 2, num: 2}
-// ]
-```
-
-Remove a mark:
-
-```typescript
-let mark = { row: 0, col: 2, num: 2 };
-sudoku.ereaseMark(mark);
-let marks = sudoku.readMarks();
-// Marks: []
-```
-
-# Solve the Game
+## Solve the Game
 
 You can get Hints:
 
 ```typescript
-let hint = sudoku.readHint();
-// Hint: {row: 4, col: 4, num: 5}
+sudoku.solve("one").grid.print();
+// · · · · · · · · ·
+// · · · 1 · 3 · 8 5
+// · · 1 · 2 · · · ·
+// · · · 5 · 7 · · ·
+// · · 4 · · · 1 · ·
+// · 9 · · · · · · ·
+// 5 · · · · · · 7 3
+// · · 2 · 1 · · · ·
+// · · · · 4 · · · 9
 ```
 
 Or solve the entire game:
 
 ```typescript
-sudoku.resolve();
+sudoku.solve("all").grid.print();
+// 9 8 7 6 5 4 3 2 1
+// 2 4 6 1 7 3 9 8 5
+// 3 5 1 9 2 8 7 4 6
+// 1 2 8 5 3 7 6 9 4
+// 6 3 4 8 9 2 1 5 7
+// 7 9 5 4 6 1 8 3 2
+// 5 1 9 2 8 6 4 7 3
+// 4 7 2 3 1 9 5 6 8
+// 8 6 3 7 4 5 2 1 9
 ```
+
+## Reset the Game
+
+Get back to the initial state:
+
+```typescript
+sudoku.reset().grid.print();
+// · · · · · · · · ·
+// · · · · · 3 · 8 5
+// · · 1 · 2 · · · ·
+// · · · 5 · 7 · · ·
+// · · 4 · · · 1 · ·
+// · 9 · · · · · · ·
+// 5 · · · · · · 7 3
+// · · 2 · 1 · · · ·
+// · · · · 4 · · · 9
+```
+
+# Coming next
+
+This is the list of upcoming features:
+
+- v1 - Sudoku Solver => Increase test coverage to stabilise and release
+- v2 - Sudoku Generator => Generate games without a given layout
+- v3 - Deliver the ability to write candidates/marks in the cell
