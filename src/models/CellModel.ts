@@ -52,13 +52,16 @@ export class CellModel implements CellInterface {
     public get clue(): boolean {
         return this._clue
     }
-    public addCandidate(candidate: number): void {
+    public addCandidate(candidate: number): CellModel {
         if (!this._digit && !this._candidates.includes(candidate) && isIntegerBetween(candidate)) { this._candidates.push(candidate) }
+        return this
     }
-    public eraseCandidate(candidate: number): void {
+    public eraseCandidate(candidate: number): CellModel {
         if (isIntegerBetween(candidate) && this._candidates.includes(candidate)) { this._candidates = this._candidates.filter(_cand => _cand !== candidate) }
+        return this
     }
-    public clearCandidates(): void {
+    public clearCandidates(): CellModel {
         this._candidates = []
+        return this
     }
 }

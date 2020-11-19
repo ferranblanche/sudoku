@@ -1,3 +1,5 @@
+import { CellModel } from "../models";
+
 export interface CellInterface {
     row: number
     column: number
@@ -5,7 +7,7 @@ export interface CellInterface {
     digit?: number
     candidates?: number[]
     clue: boolean
-    addCandidate(candidate: number): void
-    eraseCandidate(candidate: number): void
-    clearCandidates(): void
+    addCandidate(candidate: number): CellModel
+    eraseCandidate(candidate: number): CellModel
+    clearCandidates(): CellModel
 }
