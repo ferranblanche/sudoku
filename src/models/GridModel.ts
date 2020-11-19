@@ -3,13 +3,17 @@ import { Gridtype, MatrixType } from "../types";
 import { CellModel, GroupModel } from "./";
 
 export class GridModel implements GridInterface {
-    private cells: Gridtype = []
+    private _cells: Gridtype = []
 
     constructor(layout?: MatrixType) {
-        this.cells = layout ? this.matrix2grid(layout) : undefined
+        this._cells = layout ? this.matrix2grid(layout) : undefined
     }
 
-    public getRows(): GroupModel[] {
+    public get cells(): Gridtype {
+        return this._cells
+    }
+
+    public get rows(): GroupModel[] {
         const rows: GroupModel[] = []
         for (let index = 1; index <= 9; index++) {
             rows.push(this.getRow(index))
@@ -17,7 +21,7 @@ export class GridModel implements GridInterface {
         return rows
     }
 
-    public getColumns(): GroupModel[] {
+    public get columns(): GroupModel[] {
         const columns: GroupModel[] = []
         for (let index = 1; index <= 9; index++) {
             columns.push(this.getColumn(index))
@@ -25,7 +29,7 @@ export class GridModel implements GridInterface {
         return columns
     }
 
-    public getBlocks(): GroupModel[] {
+    public get blocks(): GroupModel[] {
         const blocks: GroupModel[] = []
         for (let index = 1; index <= 3; index++) {
             for (let index2 = 1; index2 <= 3; index2++) {
@@ -35,30 +39,24 @@ export class GridModel implements GridInterface {
         return blocks
     }
 
-    public getBlanks(): Gridtype {
+    public get blanks(): Gridtype {
         return this.cells.filter(cell => !cell.digit)
     }
 
-    public writeCell(row: number, column: number, digit: number): Gridtype {
-        this.cells.find(cell => cell.row === row && cell.column === column).digit = digit
-        return this.cells
-    }
-
-    public eraseCell(row: number, column: number): Gridtype {
-        this.cells.find(cell => cell.row === row && cell.column === column).digit = undefined
-        return this.cells
+    public getCell(row: number, column: number): CellModel {
+        return this.cells.find(cell => cell.row === row && cell.column === column)
     }
 
     public calculateCandidates(): GridModel {
         this.clearCandidates()
-        for (const blank of this.getBlanks()) {
+        for (const blank of this.blanks) {
             this.getCellCandidates(blank)
         }
         return this
     }
 
     private clearCandidates(): GridModel {
-        for (const blank of this.getBlanks()) {
+        for (const blank of this.blanks) {
             blank.clearCandidates()
         }
         return this

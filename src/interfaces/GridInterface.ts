@@ -1,13 +1,13 @@
 import { Gridtype } from "../types";
-import { GridModel, GroupModel } from "../models";
+import { CellModel, GridModel, GroupModel } from "../models";
 
 export interface GridInterface {
-    getRows(): GroupModel[]
-    getColumns(): GroupModel[]
-    getBlocks(): GroupModel[]
-    getBlanks(): Gridtype
-    writeCell(row: number, column: number, digit: number): Gridtype
-    eraseCell(row: number, column: number): Gridtype
+    cells: Gridtype
+    rows: GroupModel[]
+    columns: GroupModel[]
+    blocks: GroupModel[]
+    blanks: Gridtype
+    getCell(row: number, column: number): CellModel
     calculateCandidates(): GridModel
     log(): void
 }

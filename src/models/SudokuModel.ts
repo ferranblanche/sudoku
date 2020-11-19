@@ -42,17 +42,17 @@ export class SudokuModel implements SudokuInterface {
     }
 
     public writeCell(row: number, column: number, digit: number): SudokuModel {
-        this._grid.writeCell(row, column, digit)
+        this._grid.getCell(row, column).digit = digit
         return this
     }
 
     public eraseCell(row: number, column: number): SudokuModel {
-        this._grid.eraseCell(row, column)
+        this._grid.getCell(row, column).digit = undefined
         return this
     }
 
     public solve(quantity: 'one' | 'all' = 'one'): SudokuModel {
-        const cells2solve: number = quantity === 'one' ? 1 : this._grid.getBlanks().length
+        const cells2solve: number = quantity === 'one' ? 1 : this._grid.blanks.length
         for (let index = 0; index < cells2solve; index++) {
             if (!this.solveOne()) {
                 return this
@@ -69,23 +69,23 @@ export class SudokuModel implements SudokuInterface {
 
     private solveOne(): boolean {
         // Strategy 1: Find blanks with just one candidate
-        const blanks: Gridtype = this._grid.calculateCandidates().getBlanks()
+        const blanks: Gridtype = this._grid.calculateCandidates().blanks
         for (const blank of blanks) {
             if (blank.candidates.length === 1) {
-                this._grid.writeCell(blank.row, blank.column, blank.candidates[0])
+                this.writeCell(blank.row, blank.column, blank.candidates[0])
                 return true
             }
         }
         // Strategy 2: Find blanks with just one candidate
-        const rows: GroupModel[] = this._grid.getRows()
-        const columns: GroupModel[] = this._grid.getColumns()
-        const blocks: GroupModel[] = this._grid.getBlocks()
+        const rows: GroupModel[] = this._grid.rows
+        const columns: GroupModel[] = this._grid.columns
+        const blocks: GroupModel[] = this._grid.blocks
         const groups: GroupModel[] = rows.concat(columns).concat(blocks)
         for (const group of groups) {
             for (let candidate = 1; candidate <= 9; candidate++) {
                 const blanksWithCandidate = group.filterCellsByCandidate(candidate)
                 if (blanksWithCandidate.length === 1) {
-                    this._grid.writeCell(blanksWithCandidate[0].row, blanksWithCandidate[0].column, candidate)
+                    this.writeCell(blanksWithCandidate[0].row, blanksWithCandidate[0].column, candidate)
                     return true
                 }
             }
