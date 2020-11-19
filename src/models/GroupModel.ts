@@ -12,8 +12,8 @@ export class GroupModel implements GroupInterface {
         return this._cells
     }
 
-    includesDigit(candidate: number): boolean {
-        return this.getDigits().includes(candidate)
+    includesDigit(digit: number): boolean {
+        return this.getDigits().includes(digit)
     }
 
     filterCellsByCandidate(candidate: number): CellModel[] {
