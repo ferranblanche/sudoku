@@ -64,7 +64,7 @@ export class GridModel implements GridInterface {
         return this
     }
 
-    public print(): void {
+    public log(): void {
         const matrix = this.grid2matrix(this.cells)
         // tslint:disable-next-line:no-console
         console.log(matrix.map(row => { return row.join().replace(/(0)/gi, '·').replace(/(,)/gi, ' ') }).join().replace(/(,)/gi, '\n'));

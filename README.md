@@ -78,10 +78,10 @@ Get the Board:
 var grid = sudoku.grid;
 ```
 
-... or print it on the command line:
+... or log() it on the command line:
 
 ```typescript
-sudoku.grid.print();
+sudoku.grid.log()();
 // · · · · · · · · ·
 // · · · · · 3 · 8 5
 // · · 1 · 2 · · · ·
@@ -102,7 +102,7 @@ let digit: number = 1;
 
 sudoku.writeCell(row, column, digit);
 
-sudoku.grid.print();
+sudoku.grid.log()();
 // · · · · · · · · ·
 // · · · 1 · 3 · 8 5
 // · · 1 · 2 · · · ·
@@ -122,7 +122,7 @@ let column: number = 4;
 
 sudoku.eraseCell(row, column);
 
-sudoku.grid.print();
+sudoku.grid.log()();
 // · · · · · · · · ·
 // · · · · · 3 · 8 5
 // · · 1 · 2 · · · ·
@@ -139,7 +139,7 @@ sudoku.grid.print();
 You can get Hints:
 
 ```typescript
-sudoku.solve("one").grid.print();
+sudoku.solve("one").grid.log()();
 // · · · · · · · · ·
 // · · · 1 · 3 · 8 5
 // · · 1 · 2 · · · ·
@@ -154,7 +154,7 @@ sudoku.solve("one").grid.print();
 Or solve the entire game:
 
 ```typescript
-sudoku.solve("all").grid.print();
+sudoku.solve("all").grid.log()();
 // 9 8 7 6 5 4 3 2 1
 // 2 4 6 1 7 3 9 8 5
 // 3 5 1 9 2 8 7 4 6
@@ -171,7 +171,7 @@ sudoku.solve("all").grid.print();
 Get back to the initial state:
 
 ```typescript
-sudoku.reset().grid.print();
+sudoku.reset().grid.log()();
 // · · · · · · · · ·
 // · · · · · 3 · 8 5
 // · · 1 · 2 · · · ·
