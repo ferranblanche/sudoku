@@ -2,10 +2,14 @@ import { GroupInterface } from "../interfaces";
 import { CellModel } from "./CellModel";
 
 export class GroupModel implements GroupInterface {
-    private cells: CellModel[]
+    private _cells: CellModel[]
 
     constructor(cells: CellModel[]) {
-        this.cells = cells
+        this._cells = cells
+    }
+
+    public get cells() {
+        return this._cells
     }
 
     includesDigit(candidate: number): boolean {
@@ -13,12 +17,12 @@ export class GroupModel implements GroupInterface {
     }
 
     filterCellsByCandidate(candidate: number): CellModel[] {
-        return this.cells.filter(cell => cell.candidates.includes(candidate))
+        return this._cells.filter(cell => cell.candidates.includes(candidate))
     }
 
     private getDigits(): number[] {
         const digits = []
-        for (const cell of this.cells) {
+        for (const cell of this._cells) {
             digits.push(cell.digit)
         }
         return digits
