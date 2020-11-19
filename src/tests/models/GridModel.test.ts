@@ -61,23 +61,51 @@ describe('GridModel', () => {
             let grid: GridModel = new GridModel(matrixWith10Columns)
             expect(grid.cells).to.be.undefined
         })
-        // it('rejects matrix with decimals', () => {
-        //     let matrixWithDecimals: number[][] = [
-        //         [5, 3, 0, 0, 7, 0, 0, 0, 0],
-        //         [6, 0, 0, 1, 9, 5, 0, 0, 0],
-        //         [0, 9, 8, 0, 0, 0, 0, 6, 0],
-        //         [8, 0, 0, 0, 6, 0, 0, 0, 3],
-        //         [4, 0, 0, 8, 0, 3.5, 0, 0, 1],
-        //         [7, 0, 0, 0, 2, 0, 0, 0, 6],
-        //         [0, 6, 0, 0, 0, 0, 2, 8, 0],
-        //         [0, 0, 0, 4, 1, 9, 0, 0, 5],
-        //         [0, 0, 0, 0, 8, 0, 0, 7, 9]
-        //     ];
-        //     let grid: GridModel = new GridModel(matrixWithDecimals)
-        //     expect(grid.cells).to.be.undefined
-        // })
-        // it('rejects matrix with integers smaller than 1', () => { })
-        // it('rejects matrix with integers greater than 9', () => { })
+        it('rejects matrix with decimals', () => {
+            let matrixWithDecimals: number[][] = [
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3.5, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 7, 9]
+            ];
+            let grid: GridModel = new GridModel(matrixWithDecimals)
+            expect(grid.cells).to.be.undefined
+        })
+        it('rejects matrix with integers smaller than 1', () => {
+            let matrixWithIntegerSmallerThan1: number[][] = [
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, -1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 8, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 7, 9]
+            ];
+            let grid: GridModel = new GridModel(matrixWithIntegerSmallerThan1)
+            expect(grid.cells).to.be.undefined
+        })
+        it('rejects matrix with integers greater than 9', () => {
+            let matrixWithIntegerGreaterThan9: number[][] = [
+                [5, 3, 0, 0, 7, 0, 0, 0, 0],
+                [6, 0, 0, 1, 9, 5, 0, 0, 0],
+                [0, 9, 8, 0, 0, 0, 0, 6, 0],
+                [8, 0, 0, 0, 6, 0, 0, 0, 3],
+                [4, 0, 0, 8, 0, 3, 0, 0, 1],
+                [7, 0, 0, 0, 2, 0, 0, 0, 6],
+                [0, 6, 0, 0, 0, 0, 2, 18, 0],
+                [0, 0, 0, 4, 1, 9, 0, 0, 5],
+                [0, 0, 0, 0, 8, 0, 0, 7, 9]
+            ];
+            let grid: GridModel = new GridModel(matrixWithIntegerGreaterThan9)
+            expect(grid.cells).to.be.undefined
+        })
         // it('rejects matrix with duplicated digits in a row', () => { })
         // it('rejects matrix with duplicated digits in a column', () => { })
         // it('rejects matrix with duplicated digits in a block', () => { })

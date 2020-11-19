@@ -1,4 +1,4 @@
-import { isMatrixSize } from "../utilities";
+import { isMatrixOfIntegersBetween, isMatrixSize } from "../utilities";
 import { GridInterface } from "../interfaces";
 import { Gridtype, MatrixType } from "../types";
 import { CellModel, GroupModel } from "./";
@@ -83,7 +83,7 @@ export class GridModel implements GridInterface {
     }
 
     private isValidMatrix(matrix: MatrixType): boolean {
-        return isMatrixSize(matrix)
+        return isMatrixSize(matrix) && isMatrixOfIntegersBetween(matrix)
     }
 
     private matrix2grid(matrix: MatrixType): Gridtype {
