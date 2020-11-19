@@ -281,6 +281,7 @@ describe('CellModel', () => {
             let cell = new CellModel(3,7)
             let candidates = [3,6,7]
             candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            cell.clearCandidates()
             expect(cell.candidates).to.be.empty
         })
     })
