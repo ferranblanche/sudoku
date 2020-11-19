@@ -56,7 +56,7 @@ export class CellModel implements CellInterface {
         if (!this._digit && !this._candidates.includes(candidate) && isIntegerBetween(candidate)) { this._candidates.push(candidate) }
     }
     public eraseCandidate(candidate: number): void {
-        if (!this._digit && this._candidates.includes(candidate) && isIntegerBetween(candidate)) { this._candidates = this._candidates.filter(_cand => _cand === candidate) }
+        if (isIntegerBetween(candidate) && this._candidates.includes(candidate)) { this._candidates = this._candidates.filter(_cand => _cand !== candidate) }
     }
     public clearCandidates(): void {
         this._candidates = []

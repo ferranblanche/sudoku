@@ -230,6 +230,58 @@ describe('CellModel', () => {
             expect(cell.candidates).to.include(candidate)
         })
     })
-    describe('Candidates (Erase)', () => {})
-    describe('Candidates (Clear)', () => {})
+    describe('Candidates (Erase)', () => {
+        it('does nothing when provided candidate is undefined', () => {
+            let cell = new CellModel(3,7)
+            let candidates = [3,6,7]
+            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            let prevCandidates = cell.candidates
+            let candidate = undefined
+            cell.eraseCandidate(candidate)
+            expect(cell.candidates).to.equal(prevCandidates)
+        })
+        it('does nothing when provided candidate is decimal', () => {
+            let cell = new CellModel(3,7)
+            let candidates = [3,6,7]
+            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            let prevCandidates = cell.candidates
+            let candidate = 8.9
+            cell.eraseCandidate(candidate)
+            expect(cell.candidates).to.equal(prevCandidates)
+        })
+        it('does nothing when provided candidate is integer smaller than 1', () => {
+            let cell = new CellModel(3,7)
+            let candidates = [3,6,7]
+            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            let prevCandidates = cell.candidates
+            let candidate = -12
+            cell.eraseCandidate(candidate)
+            expect(cell.candidates).to.equal(prevCandidates)
+        })
+        it('does nothing when provided candidate is integer greater than 9', () => {
+            let cell = new CellModel(3,7)
+            let candidates = [3,6,7]
+            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            let prevCandidates = cell.candidates
+            let candidate = 53
+            cell.eraseCandidate(candidate)
+            expect(cell.candidates).to.equal(prevCandidates)
+        })
+        it('erases candidate when provided number is integer greater than 1 and smaller than 9', () => {
+            let cell = new CellModel(3,7)
+            let candidate = 3
+            let candidates = [candidate,6,7]
+            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            cell.eraseCandidate(candidate)
+            expect(cell.candidates).to.not.include(candidate)
+        })
+    })
+    describe('Candidates (Clear)', () => {
+        it('erases all candidates', () => {
+            let cell = new CellModel(3,7)
+            let candidates = [3,6,7]
+            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            expect(cell.candidates).to.be.empty
+        })
+    })
 })
