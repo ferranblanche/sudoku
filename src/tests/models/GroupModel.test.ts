@@ -50,12 +50,37 @@ describe('GroupModel', () => {
         })
     })
     describe('filterCellsByCandidate', () => {
-        // returns empty when candidate is undefined
-        // returns empty when candidate is decimal
-        // returns empty when candidate is integer smaller than 1
-        // returns empty when candidate is integer greater than 9
-        // returns empty when candidate is integer greater than 1 and smaller than 9 but not in any cell
-        // returns cells when candidate is integer greater than 1 and smaller than 9 and it is on at least one cell
+        it('returns empty when candidate is undefined', () => {
+            let group = new GroupModel(cells)
+            let candidate = undefined
+            expect(group.filterCellsByCandidate(candidate)).to.be.empty
+        })
+        it('returns empty when candidate is decimal', () => {
+            let group = new GroupModel(cells)
+            let candidate = 5.36
+            expect(group.filterCellsByCandidate(candidate)).to.be.empty
+        })
+        it('returns empty when candidate is integer smaller than 1', () => {
+            let group = new GroupModel(cells)
+            let candidate = -2
+            expect(group.filterCellsByCandidate(candidate)).to.be.empty
+        })
+        it('returns empty when candidate is integer greater than 9', () => {
+            let group = new GroupModel(cells)
+            let candidate = 12
+            expect(group.filterCellsByCandidate(candidate)).to.be.empty
+        })
+        it('returns empty when candidate is integer greater than 1 and smaller than 9 but not in any cell', () => {
+            let group = new GroupModel(cells)
+            let candidate = 6
+            expect(group.filterCellsByCandidate(candidate)).to.be.empty
+        })
+        it('returns cells when candidate is integer greater than 1 and smaller than 9 and it is on at least one cell', () => {
+            let group = new GroupModel(cells)
+            let candidate = 5
+            let filteredGroup = cells.filter(cell => cell.candidates.includes(candidate))
+            expect(group.filterCellsByCandidate(candidate)).to.deep.equal(filteredGroup)
+        })
     })
 })
 
