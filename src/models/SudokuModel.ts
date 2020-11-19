@@ -83,7 +83,7 @@ export class SudokuModel implements SudokuInterface {
         const groups: GroupModel[] = rows.concat(columns).concat(blocks)
         for (const group of groups) {
             for (let candidate = 1; candidate <= 9; candidate++) {
-                const blanksWithCandidate = group.filterByCandidate(candidate)
+                const blanksWithCandidate = group.filterCellsByCandidate(candidate)
                 if (blanksWithCandidate.length === 1) {
                     this._grid.writeCell(blanksWithCandidate[0].row, blanksWithCandidate[0].column, candidate)
                     return true

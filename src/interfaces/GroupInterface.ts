@@ -1,6 +1,6 @@
 import { CellModel } from "../models";
 
 export interface GroupInterface {
-    isValid(candidate: number): boolean
-    filterByCandidate(candidate: number): CellModel[]
+    includesDigit(candidate: number): boolean
+    filterCellsByCandidate(candidate: number): CellModel[]
 }

@@ -9,7 +9,7 @@ export class GridModel implements GridInterface {
         this.cells = layout ? this.matrix2grid(layout) : undefined
     }
 
-    getRows(): GroupModel[] {
+    public getRows(): GroupModel[] {
         const rows: GroupModel[] = []
         for (let index = 1; index <= 9; index++) {
             rows.push(this.getRow(index))
@@ -17,7 +17,7 @@ export class GridModel implements GridInterface {
         return rows
     }
 
-    getColumns(): GroupModel[] {
+    public getColumns(): GroupModel[] {
         const columns: GroupModel[] = []
         for (let index = 1; index <= 9; index++) {
             columns.push(this.getColumn(index))
@@ -25,7 +25,7 @@ export class GridModel implements GridInterface {
         return columns
     }
 
-    getBlocks(): GroupModel[] {
+    public getBlocks(): GroupModel[] {
         const blocks: GroupModel[] = []
         for (let index = 1; index <= 3; index++) {
             for (let index2 = 1; index2 <= 3; index2++) {
@@ -76,7 +76,7 @@ export class GridModel implements GridInterface {
         const block: GroupModel = this.getBlock(cell.block)
 
         for (let candidate = 1; candidate <= 9; candidate++) {
-            if (row.isValid(candidate) && column.isValid(candidate) && block.isValid(candidate)) {
+            if (!row.includesDigit(candidate) && !column.includesDigit(candidate) && !block.includesDigit(candidate)) {
                 cell.addCandidate(candidate)
             }
         }

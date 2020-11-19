@@ -8,11 +8,11 @@ export class GroupModel implements GroupInterface {
         this.cells = cells
     }
 
-    isValid(candidate: number): boolean {
-        return !this.getDigits().includes(candidate)
+    includesDigit(candidate: number): boolean {
+        return this.getDigits().includes(candidate)
     }
 
-    filterByCandidate(candidate: number): CellModel[] {
+    filterCellsByCandidate(candidate: number): CellModel[] {
         return this.cells.filter(cell => cell.candidates.includes(candidate))
     }
 
