@@ -5,7 +5,7 @@ export class GroupModel implements GroupInterface {
     private _cells: CellModel[]
 
     constructor(cells: CellModel[]) {
-        this._cells = cells
+        this._cells = cells.length === 9 ? cells : []
     }
 
     public get cells() {
