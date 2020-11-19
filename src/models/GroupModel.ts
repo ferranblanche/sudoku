@@ -13,7 +13,7 @@ export class GroupModel implements GroupInterface {
     }
 
     includesDigit(digit: number): boolean {
-        return this.getDigits().includes(digit)
+        return digit ? this.getDigits().includes(digit) : false
     }
 
     filterCellsByCandidate(candidate: number): CellModel[] {

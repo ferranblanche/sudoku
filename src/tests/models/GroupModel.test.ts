@@ -18,12 +18,36 @@ describe('GroupModel', () => {
         })
     })
     describe('includesDigit', () => {
-        // returns false when provided candidate / digit is undefined
-        // returns false when provided candidate / digit is decimal
-        // returns false when provided candidate / digit is integer smaller than 1
-        // returns false when provided candidate / digit is integer greater than 9
-        // returns false when provided candidate / digit is integer greater than 1 and smaller than 9 but it is not on the list
-        // returns true when provided candidate / digit is integer greater than 1 and smaller than 9 and it is on the list
+        it('returns false when provided digit is undefined', () => {
+            let group = new GroupModel(cells)
+            let digit = undefined
+            expect(group.includesDigit(digit)).to.be.false
+        })
+        it('returns false when provided digit is decimal', () => {
+            let group = new GroupModel(cells)
+            let digit = 1.89
+            expect(group.includesDigit(digit)).to.be.false
+        })
+        it('returns false when provided digit is integer smaller than 1', () => {
+            let group = new GroupModel(cells)
+            let digit = 0
+            expect(group.includesDigit(digit)).to.be.false
+        })
+        it('returns false when provided digit is integer greater than 9', () => {
+            let group = new GroupModel(cells)
+            let digit = 18
+            expect(group.includesDigit(digit)).to.be.false
+        })
+        it('returns false when provided digit is integer greater than 1 and smaller than 9 but it is not on the list', () => {
+            let group = new GroupModel(cells)
+            let digit = 3
+            expect(group.includesDigit(digit)).to.be.false
+        })
+        it('returns true when provided digit is integer greater than 1 and smaller than 9 and it is on the list', () => {
+            let group = new GroupModel(cells)
+            let digit = 8
+            expect(group.includesDigit(digit)).to.be.true
+        })
     })
     describe('filterCellsByCandidate', () => {
         // returns empty when candidate is undefined
