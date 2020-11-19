@@ -1,3 +1,4 @@
+import { isMatrixSize } from "../utilities";
 import { GridInterface } from "../interfaces";
 import { Gridtype, MatrixType } from "../types";
 import { CellModel, GroupModel } from "./";
@@ -6,7 +7,7 @@ export class GridModel implements GridInterface {
     private _cells: Gridtype = []
 
     constructor(layout?: MatrixType) {
-        this._cells = layout ? this.matrix2grid(layout) : undefined
+        this._cells = layout && this.isValidMatrix(layout) ? this.matrix2grid(layout) : undefined
     }
 
     public get cells(): Gridtype {
@@ -81,6 +82,9 @@ export class GridModel implements GridInterface {
         return cell
     }
 
+    private isValidMatrix(matrix: MatrixType): boolean {
+        return isMatrixSize(matrix)
+    }
 
     private matrix2grid(matrix: MatrixType): Gridtype {
         // converts matrix of numbers into an array of cells (row, column, digit)
