@@ -16,11 +16,6 @@ export class GroupModel implements GroupInterface {
         return this.cells.filter(cell => cell.candidates.includes(candidate))
     }
 
-    print(): void {
-        // tslint:disable-next-line:no-console
-        console.log(this.cells.map(cell => cell.digit).join().replace(/(0|,)/gi, ' '));
-    }
-
     private getDigits(): number[] {
         const digits = []
         for (const cell of this.cells) {
