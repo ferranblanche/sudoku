@@ -1,3 +1,4 @@
+import { getDiffieHellman } from "crypto";
 import { SudokuInterface } from "../interfaces";
 import { Gridtype, MatrixType } from "../types";
 import { GridModel } from "./";
@@ -12,22 +13,30 @@ export class SudokuModel implements SudokuInterface {
         this.generate()
     }
 
-    public generate(layout?: MatrixType): SudokuModel {
-        if (!layout) {
-            layout = [
-                [0, 0, 0, 8, 0, 0, 0, 7, 0],
-                [0, 4, 2, 0, 0, 0, 6, 5, 0],
-                [9, 6, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 9, 0, 0, 6, 0, 2, 0],
-                [8, 2, 0, 0, 1, 0, 0, 3, 6],
-                [0, 3, 0, 2, 0, 0, 9, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 9, 5],
-                [0, 9, 5, 0, 0, 0, 4, 1, 0],
-                [0, 8, 0, 0, 0, 3, 0, 0, 0]
-            ]
+    public generate(): SudokuModel {
+        const layout: number[][] = [
+            [5, 3, 0, 0, 7, 0, 0, 0, 0],
+            [6, 0, 0, 1, 9, 5, 0, 0, 0],
+            [0, 9, 8, 0, 0, 0, 0, 6, 0],
+            [8, 0, 0, 0, 6, 0, 0, 0, 3],
+            [4, 0, 0, 8, 0, 3, 0, 0, 1],
+            [7, 0, 0, 0, 2, 0, 0, 0, 6],
+            [0, 6, 0, 0, 0, 0, 2, 8, 0],
+            [0, 0, 0, 4, 1, 9, 0, 0, 5],
+            [0, 0, 0, 0, 8, 0, 0, 7, 9]
+        ]
+        return this.useLayout(layout)
+    }
+
+    public useLayout(layout: MatrixType) {
+        this._grid = new GridModel().useLayout(layout)
+        if (this.grid.cells && this.solveAll()) {
+            this._layout = new GridModel().useLayout(layout)
+            this.solveAll()
+            this._grid = new GridModel().useLayout(layout)
+        } else {
+            this._grid = undefined
         }
-        this._layout = new GridModel().setLayout(layout)
-        this._grid = new GridModel().setLayout(layout)
         return this
     }
 
@@ -52,13 +61,15 @@ export class SudokuModel implements SudokuInterface {
     }
 
     public solve(quantity: 'one' | 'all' = 'one'): SudokuModel {
-        const cells2solve: number = quantity === 'one' ? 1 : this._grid.blanks.length
-        for (let index = 0; index < cells2solve; index++) {
-            if (!this.solveOne()) {
-                return this
-            }
+        switch (quantity) {
+            case 'one':
+                this.solveOne()
+                break;
+
+            case 'all':
+                this.solveAll()
+                break;
         }
-        this._solution = quantity === 'all' ? this._grid : undefined
         return this
     }
 
@@ -77,10 +88,7 @@ export class SudokuModel implements SudokuInterface {
             }
         }
         // Strategy 2: Find blanks with just one candidate
-        const rows: GroupModel[] = this._grid.rows
-        const columns: GroupModel[] = this._grid.columns
-        const blocks: GroupModel[] = this._grid.blocks
-        const groups: GroupModel[] = rows.concat(columns).concat(blocks)
+        const groups: GroupModel[] = this.grid.groups
         for (const group of groups) {
             for (let candidate = 1; candidate <= 9; candidate++) {
                 const blanksWithCandidate = group.filterCellsByCandidate(candidate)
@@ -92,5 +100,15 @@ export class SudokuModel implements SudokuInterface {
         }
         // Unable to solve
         return false
+    }
+    private solveAll(): boolean {
+        const blanksLeft: number = this._grid.blanks.length
+        for (let index = 0; index < blanksLeft; index++) {
+            if (!this.solveOne()) {
+                return false
+            }
+        }
+        this._solution = this._grid
+        return true
     }
 }

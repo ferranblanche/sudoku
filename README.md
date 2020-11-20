@@ -67,7 +67,13 @@ const hardLayout: number[][] = [
   [0, 0, 0, 0, 4, 0, 0, 0, 9]
 ];
 
-sudoku.generate(hardLayout);
+sudoku.useLayout(hardLayout);
+```
+
+... or generate a new Layout
+
+```
+sudoku.generate()
 ```
 
 ## Play your Sudoku

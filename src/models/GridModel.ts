@@ -6,13 +6,13 @@ import { CellModel, GroupModel } from "./";
 export class GridModel implements GridInterface {
     private _cells: Gridtype = []
 
-    public setLayout(layout: MatrixType): GridModel {
+    public useLayout(layout: MatrixType): GridModel {
         if (!layout || !isMatrixSize(layout, 9, 9) || !isMatrixOfIntegersBetween(layout, 1, 9)) {
             this._cells = undefined
             return this
         }
         this._cells = this.matrix2grid(layout)
-        for (let group of this.groups) {
+        for (const group of this.groups) {
             if (group.cells.length !== 9) {
                 this._cells = undefined
                 return this

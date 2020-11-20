@@ -1,7 +1,8 @@
-import { Gridtype } from "../types";
+import { MatrixType, Gridtype } from "../types";
 import { CellModel, GridModel, GroupModel } from "../models";
 
 export interface GridInterface {
+    useLayout(layout: MatrixType): GridModel
     cells: Gridtype
     rows: GroupModel[]
     columns: GroupModel[]

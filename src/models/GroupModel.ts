@@ -30,8 +30,8 @@ export class GroupModel implements GroupInterface {
     }
 
     private hasDuplicateDigits(): boolean {
-        let digits: number[] = this.getDigits()
-        for (let digit of digits) {
+        const digits: number[] = this.getDigits()
+        for (const digit of digits) {
             if(digit && digits.filter(_digit => _digit === digit).length !== 1) { return true }
         }
         return false

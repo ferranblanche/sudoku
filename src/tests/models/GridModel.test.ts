@@ -12,7 +12,7 @@ describe('GridModel', () => {
                 [4, 0, 0, 8, 0, 3, 0, 0, 1]
             ];
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrixWith5Rows)
+            grid.useLayout(matrixWith5Rows)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with more than 9 rows', () => {
@@ -30,7 +30,7 @@ describe('GridModel', () => {
                 [0, 6, 0, 0, 0, 0, 2, 8, 0]
             ];
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrixWith11Rows)
+            grid.useLayout(matrixWith11Rows)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with less than 9 columns', () => {
@@ -46,7 +46,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0]
             ];
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrixWith8Columns)
+            grid.useLayout(matrixWith8Columns)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with more than 9 columns', () => {
@@ -62,7 +62,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0, 7, 9, 0]
             ];
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrixWith10Columns)
+            grid.useLayout(matrixWith10Columns)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with decimals', () => {
@@ -78,7 +78,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ];
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrixWithDecimals)
+            grid.useLayout(matrixWithDecimals)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with integers smaller than 1', () => {
@@ -94,7 +94,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ];
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrixWithIntegerSmallerThan1)
+            grid.useLayout(matrixWithIntegerSmallerThan1)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with integers greater than 9', () => {
@@ -110,7 +110,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ];
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrixWithIntegerGreaterThan9)
+            grid.useLayout(matrixWithIntegerGreaterThan9)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with duplicated digits in a row', () => {
@@ -126,7 +126,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ]
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrix)
+            grid.useLayout(matrix)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with duplicated digits in a column', () => {
@@ -142,7 +142,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ]
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrix)
+            grid.useLayout(matrix)
             expect(grid.cells).to.be.undefined
         })
         it('rejects matrix with duplicated digits in a block', () => {
@@ -158,10 +158,11 @@ describe('GridModel', () => {
                 [6, 0, 0, 0, 8, 0, 0, 7, 9]
             ]
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrix)
+            grid.useLayout(matrix)
             expect(grid.cells).to.be.undefined
         })
-        // it('rejects matrix without a solution', () => { })
+        // it('rejects matrix with mistakes', () => { })
+        // it('rejects matrix with multiple solutions', () => { })
         it('each cell in the grid contains the specified digit when the matrix is valid and solvable', () => {
             let matrix: number[][] = [
                 [5, 3, 0, 0, 7, 0, 0, 0, 0],
@@ -175,7 +176,7 @@ describe('GridModel', () => {
                 [0, 0, 0, 0, 8, 0, 0, 7, 9]
             ]
             let grid: GridModel = new GridModel()
-            grid.setLayout(matrix)
+            grid.useLayout(matrix)
             expect(grid.cells.length).to.equal(81)
         })
     })
@@ -187,16 +188,3 @@ describe('GridModel', () => {
     // calculateCanidates
     // log
 })
-
-// Mocks
-let validMatrix: number[][] = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9]
-];
