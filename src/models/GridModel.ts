@@ -6,8 +6,19 @@ import { CellModel, GroupModel } from "./";
 export class GridModel implements GridInterface {
     private _cells: Gridtype = []
 
-    constructor(layout?: MatrixType) {
-        this._cells = layout && this.isValidMatrix(layout) ? this.matrix2grid(layout) : undefined
+    public setLayout(layout: MatrixType): GridModel {
+        if (!layout || !isMatrixSize(layout, 9, 9) || !isMatrixOfIntegersBetween(layout, 1, 9)) {
+            this._cells = undefined
+            return this
+        }
+        this._cells = this.matrix2grid(layout)
+        for (let group of this.groups) {
+            if (group.cells.length !== 9) {
+                this._cells = undefined
+                return this
+            }
+        }
+        return this
     }
 
     public get cells(): Gridtype {
@@ -30,6 +41,7 @@ export class GridModel implements GridInterface {
         return columns
     }
 
+
     public get blocks(): GroupModel[] {
         const blocks: GroupModel[] = []
         for (let index = 1; index <= 3; index++) {
@@ -38,6 +50,13 @@ export class GridModel implements GridInterface {
             }
         }
         return blocks
+    }
+
+    public get groups(): GroupModel[] {
+        const rows: GroupModel[] = this.rows
+        const columns: GroupModel[] = this.columns
+        const blocks: GroupModel[] = this.blocks
+        return rows.concat(columns).concat(blocks)
     }
 
     public get blanks(): Gridtype {
@@ -80,10 +99,6 @@ export class GridModel implements GridInterface {
             }
         }
         return cell
-    }
-
-    private isValidMatrix(matrix: MatrixType): boolean {
-        return isMatrixSize(matrix) && isMatrixOfIntegersBetween(matrix)
     }
 
     private matrix2grid(matrix: MatrixType): Gridtype {

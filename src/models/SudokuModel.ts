@@ -26,8 +26,8 @@ export class SudokuModel implements SudokuInterface {
                 [0, 8, 0, 0, 0, 3, 0, 0, 0]
             ]
         }
-        this._layout = new GridModel(layout)
-        this._grid = new GridModel(layout)
+        this._layout = new GridModel().setLayout(layout)
+        this._grid = new GridModel().setLayout(layout)
         return this
     }
 

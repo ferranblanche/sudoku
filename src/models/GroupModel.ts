@@ -6,6 +6,7 @@ export class GroupModel implements GroupInterface {
 
     constructor(cells: CellModel[]) {
         this._cells = cells.length === 9 ? cells : []
+        if(this.hasDuplicateDigits()) { this._cells = [] }
     }
 
     public get cells() {
@@ -26,5 +27,13 @@ export class GroupModel implements GroupInterface {
             digits.push(cell.digit)
         }
         return digits
+    }
+
+    private hasDuplicateDigits(): boolean {
+        let digits: number[] = this.getDigits()
+        for (let digit of digits) {
+            if(digit && digits.filter(_digit => _digit === digit).length !== 1) { return true }
+        }
+        return false
     }
 }

@@ -4,12 +4,16 @@ import { CellModel, GroupModel } from "../../models"
 describe('GroupModel', () => {
     describe('constructor', () => {
         it('rejects arrays of cells whose length is smaller than 9', () => {
-            let group = new GroupModel(cells.slice(1,8))
+            let group = new GroupModel(cells.slice(1, 8))
             expect(group.cells).to.be.empty
         })
         it('rejects arrays of cells whose length is greater than 9', () => {
-            let extraCell: CellModel = new CellModel(3,10)
+            let extraCell: CellModel = new CellModel(3, 10)
             let group = new GroupModel(cells.concat([extraCell]))
+            expect(group.cells).to.be.empty
+        })
+        it('rejects arrays of cells whose length is equal than 9 when they contain duplicate digits', () => {
+            let group = new GroupModel(cellsWithDuplicate)
             expect(group.cells).to.be.empty
         })
         it('accepts arrays of cells whose length is equal than 9', () => {
@@ -86,13 +90,24 @@ describe('GroupModel', () => {
 
 // Mocks
 let cells = [
-    new CellModel(3,1,9),
-    new CellModel(3,2,6),
-    new CellModel(3,3).addCandidate(4).addCandidate(3),
-    new CellModel(3,4).addCandidate(1).addCandidate(5).addCandidate(7),
-    new CellModel(3,5).addCandidate(4).addCandidate(5),
-    new CellModel(3,6,8),
-    new CellModel(3,7).addCandidate(4).addCandidate(7),
-    new CellModel(3,8,2),
-    new CellModel(3,9).addCandidate(4).addCandidate(5).addCandidate(1)
+    new CellModel(3, 1, 9),
+    new CellModel(3, 2, 6),
+    new CellModel(3, 3).addCandidate(4).addCandidate(3),
+    new CellModel(3, 4).addCandidate(1).addCandidate(5).addCandidate(7),
+    new CellModel(3, 5).addCandidate(4).addCandidate(5),
+    new CellModel(3, 6, 8),
+    new CellModel(3, 7).addCandidate(4).addCandidate(7),
+    new CellModel(3, 8, 2),
+    new CellModel(3, 9).addCandidate(4).addCandidate(5).addCandidate(1)
+]
+let cellsWithDuplicate = [
+    new CellModel(3, 1, 9),
+    new CellModel(3, 2, 9),
+    new CellModel(3, 3).addCandidate(4).addCandidate(3),
+    new CellModel(3, 4).addCandidate(1).addCandidate(5).addCandidate(7),
+    new CellModel(3, 5).addCandidate(4).addCandidate(5),
+    new CellModel(3, 6, 8),
+    new CellModel(3, 7).addCandidate(4).addCandidate(7),
+    new CellModel(3, 8, 2),
+    new CellModel(3, 9).addCandidate(4).addCandidate(5).addCandidate(1)
 ]

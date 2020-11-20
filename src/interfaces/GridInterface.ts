@@ -6,6 +6,7 @@ export interface GridInterface {
     rows: GroupModel[]
     columns: GroupModel[]
     blocks: GroupModel[]
+    groups: GroupModel[]
     blanks: Gridtype
     getCell(row: number, column: number): CellModel
     calculateCandidates(): GridModel
