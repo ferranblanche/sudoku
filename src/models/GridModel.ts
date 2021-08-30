@@ -67,17 +67,17 @@ export class GridModel implements GridInterface {
         return this.cells.find(cell => cell.row === row && cell.column === column)
     }
 
-    public calculateCandidates(): GridModel {
-        this.clearCandidates()
+    public calculateMarks(): GridModel {
+        this.clearMarks()
         for (const blank of this.blanks) {
-            this.getCellCandidates(blank)
+            this.getCellMarks(blank)
         }
         return this
     }
 
-    private clearCandidates(): GridModel {
+    private clearMarks(): GridModel {
         for (const blank of this.blanks) {
-            blank.clearCandidates()
+            blank.clearMarks()
         }
         return this
     }
@@ -88,14 +88,14 @@ export class GridModel implements GridInterface {
         console.log(matrix.map(row => { return row.join().replace(/(0)/gi, '·').replace(/(,)/gi, ' ') }).join().replace(/(,)/gi, '\n'));
     }
 
-    private getCellCandidates(cell: CellModel): CellModel {
+    private getCellMarks(cell: CellModel): CellModel {
         const row: GroupModel = this.getRow(cell.row)
         const column: GroupModel = this.getColumn(cell.column)
         const block: GroupModel = this.getBlock(cell.block)
 
-        for (let candidate = 1; candidate <= 9; candidate++) {
-            if (!row.includesDigit(candidate) && !column.includesDigit(candidate) && !block.includesDigit(candidate)) {
-                cell.writeCandidate(candidate)
+        for (let mark = 1; mark <= 9; mark++) {
+            if (!row.includesDigit(mark) && !column.includesDigit(mark) && !block.includesDigit(mark)) {
+                cell.writeMark(mark)
             }
         }
         return cell

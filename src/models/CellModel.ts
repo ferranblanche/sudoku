@@ -8,7 +8,7 @@ export class CellModel implements CellInterface {
     private _stack: number
     private _digit?: number
     private _clue: boolean
-    private _candidates?: number[]
+    private _marks?: number[]
 
     constructor(row: number, column: number, digit?: number) {
         if (isIntegerBetween(row) && isIntegerBetween(column)) {
@@ -18,7 +18,7 @@ export class CellModel implements CellInterface {
             this._stack = Math.floor((column - 1) / 3) + 1
             this.digit = isIntegerBetween(digit) ? digit : undefined
             this._clue = this.digit ? true : false
-            this._candidates = []
+            this._marks = []
         }
     }
 
@@ -43,31 +43,31 @@ export class CellModel implements CellInterface {
     public set digit(digit: number) {
         if (isIntegerBetween(digit) && !this._clue) {
             this._digit = digit
-            this._candidates = []
+            this._marks = []
         }
     }
-    public get candidates(): number[] {
-        return this._candidates
+    public get marks(): number[] {
+        return this._marks
     }
     public get clue(): boolean {
         return this._clue
     }
-    public writeCandidate(candidate: number): CellModel {
-        if (!this._digit && !this._candidates.includes(candidate) && isIntegerBetween(candidate)) { this._candidates.push(candidate) }
+    public writeMark(mark: number): CellModel {
+        if (!this._digit && !this._marks.includes(mark) && isIntegerBetween(mark)) { this._marks.push(mark) }
         return this
     }
-    public eraseCandidate(candidate: number): CellModel {
-        if (isIntegerBetween(candidate) && this._candidates.includes(candidate)) { this._candidates = this._candidates.filter(_cand => _cand !== candidate) }
+    public eraseMark(mark: number): CellModel {
+        if (isIntegerBetween(mark) && this._marks.includes(mark)) { this._marks = this._marks.filter(_cand => _cand !== mark) }
         return this
     }
-    public clearCandidates(): CellModel {
-        this._candidates = []
+    public clearMarks(): CellModel {
+        this._marks = []
         return this
     }
     public writeDigit(digit: number): CellModel {
         if (isIntegerBetween(digit) && !this._clue) {
             this._digit = digit
-            this.clearCandidates()
+            this.clearMarks()
         }
         return this
     }

@@ -17,8 +17,8 @@ export class GroupModel implements GroupInterface {
         return digit ? this.getDigits().includes(digit) : false
     }
 
-    filterCellsByCandidate(candidate: number): CellModel[] {
-        return this._cells.filter(cell => cell.candidates.includes(candidate))
+    filterCellsByMark(mark: number): CellModel[] {
+        return this._cells.filter(cell => cell.marks.includes(mark))
     }
 
     private getDigits(): number[] {

@@ -74,21 +74,21 @@ export class SudokuModel implements SudokuInterface {
     }
 
     private solveOne(): boolean {
-        // Strategy 1: Find blanks with just one candidate
-        const blanks: Gridtype = this._grid.calculateCandidates().blanks
+        // Strategy 1: Find blanks with just one mark
+        const blanks: Gridtype = this._grid.calculateMarks().blanks
         for (const blank of blanks) {
-            if (blank.candidates.length === 1) {
-                this.writeCell(blank.row, blank.column, blank.candidates[0])
+            if (blank.marks.length === 1) {
+                this.writeCell(blank.row, blank.column, blank.marks[0])
                 return true
             }
         }
-        // Strategy 2: Find blanks with just one candidate
+        // Strategy 2: Find blanks with just one mark
         const groups: GroupModel[] = this.grid.groups
         for (const group of groups) {
-            for (let candidate = 1; candidate <= 9; candidate++) {
-                const blanksWithCandidate = group.filterCellsByCandidate(candidate)
-                if (blanksWithCandidate.length === 1) {
-                    this.writeCell(blanksWithCandidate[0].row, blanksWithCandidate[0].column, candidate)
+            for (let mark = 1; mark <= 9; mark++) {
+                const blanksWithMark = group.filterCellsByMark(mark)
+                if (blanksWithMark.length === 1) {
+                    this.writeCell(blanksWithMark[0].row, blanksWithMark[0].column, mark)
                     return true
                 }
             }

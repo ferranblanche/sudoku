@@ -5,11 +5,11 @@ export interface CellInterface {
     readonly column: number
     readonly block: number
     readonly digit?: number
-    readonly candidates?: number[]
+    readonly marks?: number[]
     readonly clue: boolean
-    writeCandidate(candidate: number): CellModel
-    eraseCandidate(candidate: number): CellModel
-    clearCandidates(): CellModel
+    writeMark(mark: number): CellModel
+    eraseMark(mark: number): CellModel
+    clearMarks(): CellModel
     writeDigit(digit: number): CellModel
     eraseDigit(): CellModel
 }

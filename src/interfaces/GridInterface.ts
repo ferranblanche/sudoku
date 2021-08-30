@@ -10,6 +10,6 @@ export interface GridInterface {
     groups: GroupModel[]
     blanks: Gridtype
     getCell(row: number, column: number): CellModel
-    calculateCandidates(): GridModel
+    calculateMarks(): GridModel
     log(): void
 }
