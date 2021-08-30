@@ -1,9 +1,9 @@
 import { CellModel } from "../models";
 
 export interface CellInterface {
-    row: number
-    column: number
-    block: number
+    readonly row: number
+    readonly column: number
+    readonly block: number
     digit?: number
     candidates?: number[]
     clue: boolean
