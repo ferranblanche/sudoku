@@ -35,7 +35,7 @@ export class CellModel implements CellInterface {
         return this._stack
     }
     public get block(): number {
-        return parseInt(this._band + '' + this._stack, 10)
+        return this._stack + ((this._band - 1) * 3)
     }
     public get digit(): number {
         return this._digit

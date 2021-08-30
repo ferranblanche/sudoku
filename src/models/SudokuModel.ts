@@ -1,4 +1,3 @@
-import { getDiffieHellman } from "crypto";
 import { SudokuInterface } from "../interfaces";
 import { Gridtype, MatrixType } from "../types";
 import { GridModel } from "./";
@@ -10,7 +9,7 @@ export class SudokuModel implements SudokuInterface {
     private _solution: GridModel = undefined
 
     public generate(): SudokuModel {
-        const layout: number[][] = [
+        const layout: MatrixType = [
             [5,3,0,0,7,0,0,0,0],
             [6,0,0,1,9,5,0,0,0],
             [0,9,8,0,0,0,0,6,0],
