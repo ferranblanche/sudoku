@@ -98,6 +98,20 @@ describe('CellModel', () => {
             expect(cell3.stack).to.be.equal(3)
         })
     })
+    describe('Block', () => {
+        it('calculates top right block properly', () => {
+            let cell = new CellModel(2,3)
+            expect(cell.block).to.equal(1)
+        })
+        it('calculates center left block properly', () => {
+            let cell = new CellModel(5,7)
+            expect(cell.block).to.equal(6)
+        })
+        it('calculates bottom center block properly', () => {
+            let cell = new CellModel(8,6)
+            expect(cell.block).to.equal(8)
+        })
+    })
     describe('Digit', () => {
         it('returns undefined digit when not defined', () => {
             let cell = new CellModel(3, 7)
@@ -168,7 +182,7 @@ describe('CellModel', () => {
             expect(cell.digit).to.be.equal(newDigit)
         })
     })
-    describe('isClue', () => {
+    describe('Clue', () => {
         it('undefined digits cannot be clues', () => {
             let cell = new CellModel(2,3,undefined)
             expect(cell.clue).to.be.false
@@ -185,7 +199,7 @@ describe('CellModel', () => {
             let cell = new CellModel(2,3,15)
             expect(cell.clue).to.be.false
         })
-        it('integer digits between 1 and 9 marked as clue are clues', () => {
+        it('integer digits between 1 and 9 introduced as clue are turn clue to true', () => {
             let cell = new CellModel(2,3,8)
             expect(cell.clue).to.be.true
         })
