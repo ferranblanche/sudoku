@@ -100,17 +100,41 @@ describe('CellModel', () => {
     //     })
     // })
     describe('Block', () => {
-        it('calculates top right block properly', () => {
-            let cell = new CellModel(2,3)
-            expect(cell.block).to.equal(1)
+        it('the cell in row 2 and column 9 shall be in block 3', () => {
+            let cell = new CellModel(2,9)
+            expect(cell.block).to.equal(3)
         })
-        it('calculates center left block properly', () => {
-            let cell = new CellModel(5,7)
-            expect(cell.block).to.equal(6)
-        })
-        it('calculates bottom center block properly', () => {
+        it('the cell in row 8 and column 6 shall be in block 8', () => {
             let cell = new CellModel(8,6)
             expect(cell.block).to.equal(8)
+        })
+        it('the cell in row 7 and column 7 shall be in block 9', () => {
+            let cell = new CellModel(7,7)
+            expect(cell.block).to.equal(9)
+        })
+        it('the cell in row 4 and column 8 shall be in block 6', () => {
+            let cell = new CellModel(4,8)
+            expect(cell.block).to.equal(6)
+        })
+        it('the cell in row 9 and column 1 shall be in block 7', () => {
+            let cell = new CellModel(9,2)
+            expect(cell.block).to.equal(7)
+        })
+        it('the cell in row 3 and column 1 shall be in block 1', () => {
+            let cell = new CellModel(3,1)
+            expect(cell.block).to.equal(1)
+        })
+        it('the cell in row 6 and column 3 shall be in block 4', () => {
+            let cell = new CellModel(6,3)
+            expect(cell.block).to.equal(4)
+        })
+        it('the cell in row 1 and column 4 shall be in block 2', () => {
+            let cell = new CellModel(1,4)
+            expect(cell.block).to.equal(2)
+        })
+        it('the cell in row 5 and column 5 shall be in block 5', () => {
+            let cell = new CellModel(5,5)
+            expect(cell.block).to.equal(5)
         })
     })
     describe('Digit', () => {
