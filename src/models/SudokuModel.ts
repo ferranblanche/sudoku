@@ -38,20 +38,23 @@ export class SudokuModel implements SudokuInterface {
     public get layout(): GridModel {
         return this._layout
     }
+
     public get grid(): GridModel {
         return this._grid
     }
+
     public get solution(): GridModel {
         return this._solution
     }
 
+
     public writeCell(row: number, column: number, digit: number): SudokuModel {
-        this._grid.getCell(row, column).digit = digit
+        this._grid.getCell(row, column).writeDigit(digit)
         return this
     }
 
     public eraseCell(row: number, column: number): SudokuModel {
-        this._grid.getCell(row, column).digit = undefined
+        this._grid.getCell(row, column).eraseDigit()
         return this
     }
 

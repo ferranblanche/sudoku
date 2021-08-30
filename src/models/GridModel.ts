@@ -1,4 +1,4 @@
-import { isMatrixOfIntegersBetween, isMatrixSize } from "../utilities";
+import { calculateBlock, isMatrixOfIntegersBetween, isMatrixSize } from "../utilities";
 import { GridInterface } from "../interfaces";
 import { Gridtype, MatrixType } from "../types";
 import { CellModel, GroupModel } from "./";
@@ -70,7 +70,7 @@ export class GridModel implements GridInterface {
     public calculateMarks(): GridModel {
         this.clearMarks()
         for (const blank of this.blanks) {
-            this.getCellMarks(blank)
+            this.calculateCellMarks(blank)
         }
         return this
     }
@@ -88,7 +88,7 @@ export class GridModel implements GridInterface {
         console.log(matrix.map(row => { return row.join().replace(/(0)/gi, '·').replace(/(,)/gi, ' ') }).join().replace(/(,)/gi, '\n'));
     }
 
-    private getCellMarks(cell: CellModel): CellModel {
+    private calculateCellMarks(cell: CellModel): CellModel {
         const row: GroupModel = this.getRow(cell.row)
         const column: GroupModel = this.getColumn(cell.column)
         const block: GroupModel = this.getBlock(cell.block)
