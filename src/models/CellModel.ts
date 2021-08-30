@@ -25,39 +25,49 @@ export class CellModel implements CellInterface {
     public get row(): number {
         return this._row
     }
+    
     public get column(): number {
         return this._column
     }
+    
     public get block(): number {
         return this._block
     }
+    
     public get digit(): number {
         return this._digit
     }
+    
     public set digit(digit: number) {
         if (isIntegerBetween(digit) && !this._clue) {
             this._digit = digit
             this._marks = []
         }
     }
+    
     public get clue(): boolean {
         return this._clue
     }
+    
     public get marks(): number[] {
         return this._marks
     }
+    
     public writeMark(mark: number): CellModel {
         if (!this._digit && !this._marks.includes(mark) && isIntegerBetween(mark)) { this._marks.push(mark) }
         return this
     }
+    
     public eraseMark(mark: number): CellModel {
         if (isIntegerBetween(mark) && this._marks.includes(mark)) { this._marks = this._marks.filter(_cand => _cand !== mark) }
         return this
     }
+    
     public clearMarks(): CellModel {
         this._marks = []
         return this
     }
+    
     public writeDigit(digit: number): CellModel {
         if (isIntegerBetween(digit) && !this._clue) {
             this._digit = digit
@@ -65,6 +75,7 @@ export class CellModel implements CellInterface {
         }
         return this
     }
+    
     public eraseDigit(): CellModel {
         this._digit = undefined
         return this
