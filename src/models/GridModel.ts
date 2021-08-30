@@ -95,7 +95,7 @@ export class GridModel implements GridInterface {
 
         for (let candidate = 1; candidate <= 9; candidate++) {
             if (!row.includesDigit(candidate) && !column.includesDigit(candidate) && !block.includesDigit(candidate)) {
-                cell.addCandidate(candidate)
+                cell.writeCandidate(candidate)
             }
         }
         return cell
@@ -109,7 +109,7 @@ export class GridModel implements GridInterface {
             for (let columnIndex = 1; columnIndex <= row.length; columnIndex++) {
                 const digit = row[columnIndex - 1];
                 const isClue = digit ? true : false
-                cells.push(new CellModel(rowIndex, columnIndex, digit, isClue))
+                cells.push(new CellModel(rowIndex, columnIndex, digit))
             }
         }
         return cells

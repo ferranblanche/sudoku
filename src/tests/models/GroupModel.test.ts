@@ -92,22 +92,22 @@ describe('GroupModel', () => {
 let cells = [
     new CellModel(3, 1, 9),
     new CellModel(3, 2, 6),
-    new CellModel(3, 3).addCandidate(4).addCandidate(3),
-    new CellModel(3, 4).addCandidate(1).addCandidate(5).addCandidate(7),
-    new CellModel(3, 5).addCandidate(4).addCandidate(5),
+    new CellModel(3, 3).writeCandidate(4).writeCandidate(3),
+    new CellModel(3, 4).writeCandidate(1).writeCandidate(5).writeCandidate(7),
+    new CellModel(3, 5).writeCandidate(4).writeCandidate(5),
     new CellModel(3, 6, 8),
-    new CellModel(3, 7).addCandidate(4).addCandidate(7),
+    new CellModel(3, 7).writeCandidate(4).writeCandidate(7),
     new CellModel(3, 8, 2),
-    new CellModel(3, 9).addCandidate(4).addCandidate(5).addCandidate(1)
+    new CellModel(3, 9).writeCandidate(4).writeCandidate(5).writeCandidate(1)
 ]
 let cellsWithDuplicate = [
     new CellModel(3, 1, 9),
     new CellModel(3, 2, 9),
-    new CellModel(3, 3).addCandidate(4).addCandidate(3),
-    new CellModel(3, 4).addCandidate(1).addCandidate(5).addCandidate(7),
-    new CellModel(3, 5).addCandidate(4).addCandidate(5),
+    new CellModel(3, 3).writeCandidate(4).writeCandidate(3),
+    new CellModel(3, 4).writeCandidate(1).writeCandidate(5).writeCandidate(7),
+    new CellModel(3, 5).writeCandidate(4).writeCandidate(5),
     new CellModel(3, 6, 8),
-    new CellModel(3, 7).addCandidate(4).addCandidate(7),
+    new CellModel(3, 7).writeCandidate(4).writeCandidate(7),
     new CellModel(3, 8, 2),
-    new CellModel(3, 9).addCandidate(4).addCandidate(5).addCandidate(1)
+    new CellModel(3, 9).writeCandidate(4).writeCandidate(5).writeCandidate(1)
 ]

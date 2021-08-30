@@ -125,62 +125,68 @@ describe('CellModel', () => {
             expect(cell.digit).to.be.equal(digit)
         })
     })
-    describe('Deigit (edit)', () => {
+    describe('Digit (edit)', () => {
         it('keeps digit when number under is undefined', () => {
             let digit = 3
             let cell = new CellModel(3,6,digit)
-            cell.digit = undefined
+            cell.writeDigit(undefined)
             expect(cell.digit).to.be.equal(digit)
         })
         it('keeps digit when number under is decimal', () => {
             let digit = 3
             let cell = new CellModel(3,6,digit)
-            cell.digit = 5.9
+            cell.writeDigit(5.9)
             expect(cell.digit).to.be.equal(digit)
         })
         it('keeps digit when number under is smaller than 1', () => {
             let digit = 3
             let cell = new CellModel(3,6,digit)
-            cell.digit = -3
+            cell.writeDigit(-3)
             expect(cell.digit).to.be.equal(digit)
         })
         it('keeps digit when number under is greater than 9', () => {
             let digit = 3
             let cell = new CellModel(3,6,digit)
-            cell.digit = 99
+            cell.writeDigit(99)
             expect(cell.digit).to.be.equal(digit)
         })
-        it('keeps digit when number under is greater than 1 and smaller than 9', () => {
-            let digit = 3
-            let cell = new CellModel(3,6,digit)
+        it('keeps digit when the cell is a clue', () => {
+            let originalDigit = 3
+            let cell = new CellModel(3,6, originalDigit)
+            expect(cell.digit).to.be.equal(originalDigit)
             let newDigit = 8
-            cell.digit = newDigit
+            cell.writeDigit(newDigit)
+            expect(cell.digit).to.be.equal(originalDigit)
+        })
+        it('edits digit when writing a number greater than 1 and smaller than 9 (in a cell that is not a clue)', () => {
+            let cell = new CellModel(3,6)
+            let originalDigit = 3
+            cell.writeDigit(originalDigit)
+            expect(cell.digit).to.be.equal(originalDigit)
+            let newDigit = 8
+            cell.writeDigit(newDigit)
             expect(cell.digit).to.be.equal(newDigit)
         })
     })
     describe('isClue', () => {
         it('undefined digits cannot be clues', () => {
-            let cell = new CellModel(2,3,undefined,true)
+            let cell = new CellModel(2,3,undefined)
             expect(cell.clue).to.be.false
         })
         it('decimal digits cannot be clues', () => {
-            let cell = new CellModel(2,3,3.6,true)
+            let cell = new CellModel(2,3,3.6)
             expect(cell.clue).to.be.false
         })
         it('integer digits smaller than 1 cannot be clues', () => {
-            let cell = new CellModel(2,3,0,true)
+            let cell = new CellModel(2,3,0)
             expect(cell.clue).to.be.false
         })
         it('integer digits greater than 9 cannot be clues', () => {
-            let cell = new CellModel(2,3,15,true)
-            expect(cell.clue).to.be.false
-        })
-        it('integer digits between 1 and 9 not marked as clue are not clues', () => {
-            let cell = new CellModel(2,3,6,false)
+            let cell = new CellModel(2,3,15)
             expect(cell.clue).to.be.false
         })
         it('integer digits between 1 and 9 marked as clue are clues', () => {
-            let cell = new CellModel(2,3,8,true)
+            let cell = new CellModel(2,3,8)
             expect(cell.clue).to.be.true
         })
     })
@@ -188,45 +194,45 @@ describe('CellModel', () => {
         it('rejects candidates when digit is defined', () => {
             let cell = new CellModel(3,7,3)
             let candidate = 6
-            cell.addCandidate(candidate)
+            cell.writeCandidate(candidate)
             expect(cell.candidates).to.be.empty
         })
         it('rejects undefined candidates', () => {
             let cell = new CellModel(3,7)
-            cell.addCandidate(5)
+            cell.writeCandidate(5)
             let candidate = undefined
-            cell.addCandidate(candidate)
+            cell.writeCandidate(candidate)
             expect(cell.candidates).to.not.include(candidate)
         })
         it('rejects decimal candidates', () => {
             let cell = new CellModel(3,7)
             let candidate = 6.84
-            cell.addCandidate(candidate)
+            cell.writeCandidate(candidate)
             expect(cell.candidates).to.be.empty
         })
         it('rejects integer candidates smaller than 1', () => {
             let cell = new CellModel(3,7)
             let candidate = -1
-            cell.addCandidate(candidate)
+            cell.writeCandidate(candidate)
             expect(cell.candidates).to.be.empty
         })
         it('rejects integer candidates greater than 9', () => {
             let cell = new CellModel(3,7)
             let candidate = 68
-            cell.addCandidate(candidate)
+            cell.writeCandidate(candidate)
             expect(cell.candidates).to.be.empty
         })
         it('rejects integer candidates when they were already added', () => {
             let cell = new CellModel(3,7)
             let candidate = 4
-            cell.addCandidate(candidate)
-            cell.addCandidate(candidate)
+            cell.writeCandidate(candidate)
+            cell.writeCandidate(candidate)
             expect(cell.candidates).to.have.length(1).to.include(candidate)
         })
         it('accepts integer candidates greater than 1 and smaller than 9 when digit is not defined', () => {
             let cell = new CellModel(3,7)
             let candidate = 6
-            cell.addCandidate(candidate)
+            cell.writeCandidate(candidate)
             expect(cell.candidates).to.include(candidate)
         })
     })
@@ -234,7 +240,7 @@ describe('CellModel', () => {
         it('does nothing when provided candidate is undefined', () => {
             let cell = new CellModel(3,7)
             let candidates = [3,6,7]
-            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            candidates.forEach(_candidate => cell.writeCandidate(_candidate))
             let prevCandidates = cell.candidates
             let candidate = undefined
             cell.eraseCandidate(candidate)
@@ -243,7 +249,7 @@ describe('CellModel', () => {
         it('does nothing when provided candidate is decimal', () => {
             let cell = new CellModel(3,7)
             let candidates = [3,6,7]
-            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            candidates.forEach(_candidate => cell.writeCandidate(_candidate))
             let prevCandidates = cell.candidates
             let candidate = 8.9
             cell.eraseCandidate(candidate)
@@ -252,7 +258,7 @@ describe('CellModel', () => {
         it('does nothing when provided candidate is integer smaller than 1', () => {
             let cell = new CellModel(3,7)
             let candidates = [3,6,7]
-            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            candidates.forEach(_candidate => cell.writeCandidate(_candidate))
             let prevCandidates = cell.candidates
             let candidate = -12
             cell.eraseCandidate(candidate)
@@ -261,7 +267,7 @@ describe('CellModel', () => {
         it('does nothing when provided candidate is integer greater than 9', () => {
             let cell = new CellModel(3,7)
             let candidates = [3,6,7]
-            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            candidates.forEach(_candidate => cell.writeCandidate(_candidate))
             let prevCandidates = cell.candidates
             let candidate = 53
             cell.eraseCandidate(candidate)
@@ -271,7 +277,7 @@ describe('CellModel', () => {
             let cell = new CellModel(3,7)
             let candidate = 3
             let candidates = [candidate,6,7]
-            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            candidates.forEach(_candidate => cell.writeCandidate(_candidate))
             cell.eraseCandidate(candidate)
             expect(cell.candidates).to.not.include(candidate)
         })
@@ -280,7 +286,7 @@ describe('CellModel', () => {
         it('erases all candidates', () => {
             let cell = new CellModel(3,7)
             let candidates = [3,6,7]
-            candidates.forEach(_candidate => cell.addCandidate(_candidate))
+            candidates.forEach(_candidate => cell.writeCandidate(_candidate))
             cell.clearCandidates()
             expect(cell.candidates).to.be.empty
         })

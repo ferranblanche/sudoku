@@ -10,14 +10,14 @@ export class CellModel implements CellInterface {
     private _clue: boolean
     private _candidates?: number[]
 
-    constructor(row: number, column: number, digit?: number, isClue?: boolean) {
+    constructor(row: number, column: number, digit?: number) {
         if (isIntegerBetween(row) && isIntegerBetween(column)) {
             this._row = row
             this._column = column
             this._band = Math.floor((row - 1) / 3) + 1
             this._stack = Math.floor((column - 1) / 3) + 1
             this.digit = isIntegerBetween(digit) ? digit : undefined
-            this._clue = isIntegerBetween(digit) ? isClue : false
+            this._clue = this.digit ? true : false
             this._candidates = []
         }
     }
@@ -52,7 +52,7 @@ export class CellModel implements CellInterface {
     public get clue(): boolean {
         return this._clue
     }
-    public addCandidate(candidate: number): CellModel {
+    public writeCandidate(candidate: number): CellModel {
         if (!this._digit && !this._candidates.includes(candidate) && isIntegerBetween(candidate)) { this._candidates.push(candidate) }
         return this
     }
@@ -62,6 +62,17 @@ export class CellModel implements CellInterface {
     }
     public clearCandidates(): CellModel {
         this._candidates = []
+        return this
+    }
+    public writeDigit(digit: number): CellModel {
+        if (isIntegerBetween(digit) && !this._clue) {
+            this._digit = digit
+            this.clearCandidates()
+        }
+        return this
+    }
+    public eraseDigit(): CellModel {
+        this._digit = undefined
         return this
     }
 }
