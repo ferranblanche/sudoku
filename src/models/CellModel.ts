@@ -4,8 +4,7 @@ import { isIntegerBetween } from "../utilities"
 export class CellModel implements CellInterface {
     private _row: number
     private _column: number
-    private _band: number
-    private _stack: number
+    private _block: number
     private _digit?: number
     private _clue: boolean
     private _marks?: number[]
@@ -14,9 +13,10 @@ export class CellModel implements CellInterface {
         if (isIntegerBetween(row) && isIntegerBetween(column)) {
             this._row = row
             this._column = column
-            this._band = Math.floor((row - 1) / 3) + 1
-            this._stack = Math.floor((column - 1) / 3) + 1
-            this.digit = isIntegerBetween(digit) ? digit : undefined
+            let band = Math.floor((row - 1) / 3) + 1
+            let stack = Math.floor((column - 1) / 3) + 1
+            this._block = stack + ((band - 1) * 3)
+            this._digit = isIntegerBetween(digit) ? digit : undefined
             this._clue = this.digit ? true : false
             this._marks = []
         }
@@ -28,14 +28,8 @@ export class CellModel implements CellInterface {
     public get column(): number {
         return this._column
     }
-    public get band(): number {
-        return this._band
-    }
-    public get stack(): number {
-        return this._stack
-    }
     public get block(): number {
-        return this._stack + ((this._band - 1) * 3)
+        return this._block
     }
     public get digit(): number {
         return this._digit
@@ -46,11 +40,11 @@ export class CellModel implements CellInterface {
             this._marks = []
         }
     }
-    public get marks(): number[] {
-        return this._marks
-    }
     public get clue(): boolean {
         return this._clue
+    }
+    public get marks(): number[] {
+        return this._marks
     }
     public writeMark(mark: number): CellModel {
         if (!this._digit && !this._marks.includes(mark) && isIntegerBetween(mark)) { this._marks.push(mark) }

@@ -22,82 +22,83 @@ describe('CellModel', () => {
             expect(cell).to.be.empty
         })
     })
-    describe('Band', () => {
-        it('returns undefined when row is not defined', () => {
-            let cell = new CellModel(undefined,3)
-            expect(cell.band).to.be.undefined
-        })
-        it('returns undefined when row is smaller than 1', () => {
-            let cell = new CellModel(-5,3)
-            expect(cell.band).to.be.undefined
-        })
-        it('returns undefined when row is greater than 9', () => {
-            let cell = new CellModel(18,3)
-            expect(cell.band).to.be.undefined
-        })
-        it('returns band 1 when row is between 1 and 3', () => {
-            let cell1 = new CellModel(1,3)
-            expect(cell1.band).to.be.equal(1)
-            let cell2 = new CellModel(2,5)
-            expect(cell2.band).to.be.equal(1)
-            let cell3 = new CellModel(3,8)
-            expect(cell3.band).to.be.equal(1)
-        })
-        it('returns band 1 when row is between 4 and 6', () => {
-            let cell1 = new CellModel(4,3)
-            expect(cell1.band).to.be.equal(2)
-            let cell2 = new CellModel(5,5)
-            expect(cell2.band).to.be.equal(2)
-            let cell3 = new CellModel(6,8)
-            expect(cell3.band).to.be.equal(2)
-        })
-        it('returns band 1 when row is between 7 and 9', () => {
-            let cell1 = new CellModel(7,3)
-            expect(cell1.band).to.be.equal(3)
-            let cell2 = new CellModel(8,5)
-            expect(cell2.band).to.be.equal(3)
-            let cell3 = new CellModel(9,8)
-            expect(cell3.band).to.be.equal(3)
-        })
-    })
-    describe('Stack', () => {
-        it('returns undefined when column is not defined', () => {
-            let cell = new CellModel(3, undefined)
-            expect(cell.stack).to.be.undefined
-        })
-        it('returns undefined when column is smaller than 1', () => {
-            let cell = new CellModel(3,-5)
-            expect(cell.stack).to.be.undefined
-        })
-        it('returns undefined when column is greater than 9', () => {
-            let cell = new CellModel(3,18)
-            expect(cell.stack).to.be.undefined
-        })
-        it('returns stack 1 when column is between 1 and 3', () => {
-            let cell1 = new CellModel(8,1)
-            expect(cell1.stack).to.be.equal(1)
-            let cell2 = new CellModel(4,2)
-            expect(cell2.stack).to.be.equal(1)
-            let cell3 = new CellModel(1,3)
-            expect(cell3.stack).to.be.equal(1)
-        })
-        it('returns stack 1 when column is between 4 and 6', () => {
-            let cell1 = new CellModel(8,4)
-            expect(cell1.stack).to.be.equal(2)
-            let cell2 = new CellModel(4,5)
-            expect(cell2.stack).to.be.equal(2)
-            let cell3 = new CellModel(1,6)
-            expect(cell3.stack).to.be.equal(2)
-        })
-        it('returns stack 1 when column is between 7 and 9', () => {
-            let cell1 = new CellModel(8,7)
-            expect(cell1.stack).to.be.equal(3)
-            let cell2 = new CellModel(4,8)
-            expect(cell2.stack).to.be.equal(3)
-            let cell3 = new CellModel(1,9)
-            expect(cell3.stack).to.be.equal(3)
-        })
-    })
+    // Bands and Stacks are just used to calculate the Block. So should not be exposed to the end user
+    // describe('Band', () => {
+    //     it('returns undefined when row is not defined', () => {
+    //         let cell = new CellModel(undefined,3)
+    //         expect(cell.band).to.be.undefined
+    //     })
+    //     it('returns undefined when row is smaller than 1', () => {
+    //         let cell = new CellModel(-5,3)
+    //         expect(cell.band).to.be.undefined
+    //     })
+    //     it('returns undefined when row is greater than 9', () => {
+    //         let cell = new CellModel(18,3)
+    //         expect(cell.band).to.be.undefined
+    //     })
+    //     it('returns band 1 when row is between 1 and 3', () => {
+    //         let cell1 = new CellModel(1,3)
+    //         expect(cell1.band).to.be.equal(1)
+    //         let cell2 = new CellModel(2,5)
+    //         expect(cell2.band).to.be.equal(1)
+    //         let cell3 = new CellModel(3,8)
+    //         expect(cell3.band).to.be.equal(1)
+    //     })
+    //     it('returns band 1 when row is between 4 and 6', () => {
+    //         let cell1 = new CellModel(4,3)
+    //         expect(cell1.band).to.be.equal(2)
+    //         let cell2 = new CellModel(5,5)
+    //         expect(cell2.band).to.be.equal(2)
+    //         let cell3 = new CellModel(6,8)
+    //         expect(cell3.band).to.be.equal(2)
+    //     })
+    //     it('returns band 1 when row is between 7 and 9', () => {
+    //         let cell1 = new CellModel(7,3)
+    //         expect(cell1.band).to.be.equal(3)
+    //         let cell2 = new CellModel(8,5)
+    //         expect(cell2.band).to.be.equal(3)
+    //         let cell3 = new CellModel(9,8)
+    //         expect(cell3.band).to.be.equal(3)
+    //     })
+    // })
+    // describe('Stack', () => {
+    //     it('returns undefined when column is not defined', () => {
+    //         let cell = new CellModel(3, undefined)
+    //         expect(cell.stack).to.be.undefined
+    //     })
+    //     it('returns undefined when column is smaller than 1', () => {
+    //         let cell = new CellModel(3,-5)
+    //         expect(cell.stack).to.be.undefined
+    //     })
+    //     it('returns undefined when column is greater than 9', () => {
+    //         let cell = new CellModel(3,18)
+    //         expect(cell.stack).to.be.undefined
+    //     })
+    //     it('returns stack 1 when column is between 1 and 3', () => {
+    //         let cell1 = new CellModel(8,1)
+    //         expect(cell1.stack).to.be.equal(1)
+    //         let cell2 = new CellModel(4,2)
+    //         expect(cell2.stack).to.be.equal(1)
+    //         let cell3 = new CellModel(1,3)
+    //         expect(cell3.stack).to.be.equal(1)
+    //     })
+    //     it('returns stack 1 when column is between 4 and 6', () => {
+    //         let cell1 = new CellModel(8,4)
+    //         expect(cell1.stack).to.be.equal(2)
+    //         let cell2 = new CellModel(4,5)
+    //         expect(cell2.stack).to.be.equal(2)
+    //         let cell3 = new CellModel(1,6)
+    //         expect(cell3.stack).to.be.equal(2)
+    //     })
+    //     it('returns stack 1 when column is between 7 and 9', () => {
+    //         let cell1 = new CellModel(8,7)
+    //         expect(cell1.stack).to.be.equal(3)
+    //         let cell2 = new CellModel(4,8)
+    //         expect(cell2.stack).to.be.equal(3)
+    //         let cell3 = new CellModel(1,9)
+    //         expect(cell3.stack).to.be.equal(3)
+    //     })
+    // })
     describe('Block', () => {
         it('calculates top right block properly', () => {
             let cell = new CellModel(2,3)
