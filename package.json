@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/ferranblanche/sudoku/issues"
   },
-  "homepage": "https://github.com/ferranblanche/sudoku#readme"
+  "homepage": "https://github.com/ferranblanche/sudoku#readme",
+  "devDependencies": {
+    "typescript": "^4.8.3"
+  }
 }

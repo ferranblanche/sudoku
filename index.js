@@ -1,1 +1,3 @@
-export const Sudoku = {}
+import { Sudoku } from "./dist";
+
+export default Sudoku;
