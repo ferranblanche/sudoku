@@ -1,11 +1,12 @@
 {
   "name": "@ferranblanche/sudoku",
   "version": "0.0.1",
-  "description": "",
+  "description": "Library to generate and solve Sudokus",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --loader tsx --test src/tests/*",
+    "lint": "eslint src/",
+    "build": "npm run lint && npm run test && tsc"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,11 @@
   },
   "homepage": "https://github.com/ferranblanche/sudoku#readme",
   "devDependencies": {
+    "@types/node": "^18.7.21",
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
     "eslint": "^8.24.0",
+    "tsx": "^3.9.0",
     "typescript": "^4.8.3"
   }
 }
